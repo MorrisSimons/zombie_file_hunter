@@ -235,7 +235,9 @@ def analyze_repository(root_dir, repo_name):
     
     # Color nodes
     for node in graph.nodes():
-        if node in connected:
+        if 'components/ui' in node.lower():
+            graph.nodes[node]['color'] = 'orange'
+        elif node in connected:
             graph.nodes[node]['color'] = 'lightblue'
         else:
             graph.nodes[node]['color'] = 'red'
