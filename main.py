@@ -281,9 +281,13 @@ def main():
             print("Use: python script.py owner/repo [myCompanies.tsx]")
             return
         
-        # Check for myCompanies file argument
-        if len(sys.argv) > 2 and sys.argv[2].strip().lower() == 'mycompanies.tsx':
-            my_companies_file = 'pages/MyCompanies.tsx'
+        # Check for target file argument
+        if len(sys.argv) > 2:
+            target_file = sys.argv[2].strip()
+            if target_file.lower() == 'mycompanies.tsx':
+                my_companies_file = 'pages/MyCompanies.tsx'
+            else:
+                my_companies_file = target_file
     else:
         repo_url = input("GitHub repo URL: ").strip()
     
