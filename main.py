@@ -18,7 +18,7 @@ SKIP_FILES = [
     "hooks/use-toast.ts", "components/ui/use-toast.ts",
     "components/ui/toast.tsx", "components/ui/toaster.tsx"
 ]
-SKIP_PATTERNS = ["node_modules", ".git", "dist", "build", ".next"]
+SKIP_PATTERNS = ["node_modules", ".git", "dist", "build", ".next", "__pycache__", ".vscode", ".idea"]
 EXTERNAL_PACKAGES = ['react', 'typescript', 'next', 'axios', 'lodash', '@radix-ui']
 
 
@@ -97,6 +97,34 @@ def should_skip_file(file_path):
     return False
 
 
+def should_include_non_code_file(file_path):
+    """Check if non-code file should be included in the graph"""
+    # Include common asset and document types
+    included_extensions = {
+        '.pdf', '.webp', '.png', '.jpg', '.jpeg', '.gif', '.svg',
+        '.md', '.txt', '.json', '.xml', '.yaml', '.yml',
+        '.css', '.scss', '.sass', '.less',
+        '.html', '.htm'
+    }
+    
+    # Skip very large files or temporary files
+    excluded_patterns = [
+        '.log', '.tmp', '.cache', '.lock', 
+        'package-lock.json', 'yarn.lock', '.env'
+    ]
+    
+    file_str = str(file_path)
+    extension = file_path.suffix.lower()
+    
+    # Skip excluded patterns
+    for pattern in excluded_patterns:
+        if pattern in file_str.lower():
+            return False
+    
+    # Include if it has an included extension
+    return extension in included_extensions
+
+
 def get_imports(code):
     """Extract import paths from code"""
     patterns = [
@@ -166,17 +194,32 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     """Main analysis function"""
     print(f"Analyzing {repo_name} in {root_dir}")
     
-    # Find all source files
-    files = []
+    # Find all source files (code files)
+    code_files = []
     for pattern in ["*.ts", "*.tsx", "*.js", "*.jsx"]:
-        files.extend(root_dir.rglob(pattern))
+        code_files.extend(root_dir.rglob(pattern))
     
-    # Filter files
-    files = [f for f in files 
-             if not f.name.endswith('.d.ts') and 
-             not should_skip_file(f.relative_to(root_dir))]
+    # Filter code files
+    code_files = [f for f in code_files 
+                  if not f.name.endswith('.d.ts') and 
+                  not should_skip_file(f.relative_to(root_dir))]
     
-    print(f"Found {len(files)} files")
+    # Find all other files (non-code files like PDFs, images, etc.)
+    all_files = []
+    for file in root_dir.rglob("*"):
+        if file.is_file() and not should_skip_file(file.relative_to(root_dir)):
+            all_files.append(file)
+    
+    # Separate code files from other files
+    code_extensions = {'.ts', '.tsx', '.js', '.jsx', '.d.ts'}
+    other_files = [f for f in all_files 
+                   if f.suffix.lower() not in code_extensions and 
+                   should_include_non_code_file(f)]
+    
+    # Combine all files
+    files = code_files + other_files
+    
+    print(f"Found {len(code_files)} code files and {len(other_files)} other files ({len(files)} total)")
     
     # Build import graph
     graph = nx.DiGraph()
@@ -185,8 +228,8 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
         file_rel = str(file.relative_to(root_dir))
         graph.add_node(file_rel)
     
-    # Add edges for imports
-    for file in files:
+    # Add edges for imports (only for code files)
+    for file in code_files:
         try:
             code = file.read_text(encoding='utf-8')
             imports = get_imports(code)
@@ -241,7 +284,14 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     
     # Color nodes
     for node in graph.nodes():
-        if my_companies_file and node in my_companies_connected:
+        # Get file extension to determine if it's a code file
+        node_path = root_dir / node
+        is_code_file = node_path.suffix.lower() in {'.ts', '.tsx', '.js', '.jsx'}
+        
+        if not is_code_file:
+            # Non-code files (PDFs, images, etc.) get yellow color
+            graph.nodes[node]['color'] = 'yellow'
+        elif my_companies_file and node in my_companies_connected:
             graph.nodes[node]['color'] = 'lightgreen'
         elif 'components/ui' in node.lower():
             graph.nodes[node]['color'] = 'orange'

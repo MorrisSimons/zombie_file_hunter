@@ -96,7 +96,7 @@
 <!-- types/company.ts -->
 <g id="node7" class="node">
 <title>types/company.ts</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="5128.39" cy="-162" rx="90.98" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="5128.39" cy="-162" rx="90.98" ry="18"/>
 <text text-anchor="middle" x="5128.39" y="-158.3" font-family="Times,serif" font-size="14.00">types/company.ts</text>
 </g>
 <!-- types/property.ts -->
@@ -114,7 +114,7 @@
 <!-- integrations/supabase/client.ts -->
 <g id="node13" class="node">
 <title>integrations/supabase/client.ts</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3696.39" cy="-90" rx="154.07" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3696.39" cy="-90" rx="154.07" ry="18"/>
 <text text-anchor="middle" x="3696.39" y="-86.3" font-family="Times,serif" font-size="14.00">integrations/supabase/client.ts</text>
 </g>
 <!-- services/image&#45;service.ts&#45;&gt;integrations/supabase/client.ts -->
@@ -126,7 +126,7 @@
 <!-- services/company&#45;service.ts -->
 <g id="node10" class="node">
 <title>services/company&#45;service.ts</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="5319.39" cy="-234" rx="141.07" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="5319.39" cy="-234" rx="141.07" ry="18"/>
 <text text-anchor="middle" x="5319.39" y="-230.3" font-family="Times,serif" font-size="14.00">services/company&#45;service.ts</text>
 </g>
 <!-- services/company&#45;service.ts&#45;&gt;types/company.ts -->
@@ -150,7 +150,7 @@
 <!-- integrations/supabase/types.ts -->
 <g id="node12" class="node">
 <title>integrations/supabase/types.ts</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3696.39" cy="-18" rx="153.27" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3696.39" cy="-18" rx="153.27" ry="18"/>
 <text text-anchor="middle" x="3696.39" y="-14.3" font-family="Times,serif" font-size="14.00">integrations/supabase/types.ts</text>
 </g>
 <!-- integrations/supabase/client.ts&#45;&gt;integrations/supabase/types.ts -->
@@ -216,7 +216,7 @@
 <!-- pages/MyCompanies.tsx -->
 <g id="node20" class="node">
 <title>pages/MyCompanies.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="4067.39" cy="-378" rx="124.28" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="4067.39" cy="-378" rx="124.28" ry="18"/>
 <text text-anchor="middle" x="4067.39" y="-374.3" font-family="Times,serif" font-size="14.00">pages/MyCompanies.tsx</text>
 </g>
 <!-- App.tsx&#45;&gt;pages/MyCompanies.tsx -->
@@ -286,9 +286,9 @@
 <polygon fill="black" stroke="black" points="5142.55,-431.48 5133.87,-437.56 5144.45,-438.22 5142.55,-431.48"/>
 </g>
 <!-- App.css -->
-<g id="node103" class="node">
+<g id="node104" class="node">
 <title>App.css</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="5758.39" cy="-378" rx="46.29" ry="18"/>
+<ellipse fill="yellow" stroke="yellow" cx="5758.39" cy="-378" rx="46.29" ry="18"/>
 <text text-anchor="middle" x="5758.39" y="-374.3" font-family="Times,serif" font-size="14.00">App.css</text>
 </g>
 <!-- App.tsx&#45;&gt;App.css -->
@@ -310,9 +310,9 @@
 <polygon fill="black" stroke="black" points="5136.29,-499.02 5145.41,-504.41 5141.64,-494.51 5136.29,-499.02"/>
 </g>
 <!-- index.css -->
-<g id="node104" class="node">
+<g id="node103" class="node">
 <title>index.css</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="5218.39" cy="-450" rx="53.89" ry="18"/>
+<ellipse fill="yellow" stroke="yellow" cx="5218.39" cy="-450" rx="53.89" ry="18"/>
 <text text-anchor="middle" x="5218.39" y="-446.3" font-family="Times,serif" font-size="14.00">index.css</text>
 </g>
 <!-- main.tsx&#45;&gt;index.css -->
@@ -348,7 +348,7 @@
 <!-- components/Navbar.tsx -->
 <g id="node33" class="node">
 <title>components/Navbar.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3836.39" cy="-234" rx="120.48" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3836.39" cy="-234" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="3836.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/Navbar.tsx</text>
 </g>
 <!-- pages/CompanyDetail.tsx&#45;&gt;components/Navbar.tsx -->
@@ -360,7 +360,7 @@
 <!-- components/Footer.tsx -->
 <g id="node34" class="node">
 <title>components/Footer.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="4490.39" cy="-234" rx="116.18" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="4490.39" cy="-234" rx="116.18" ry="18"/>
 <text text-anchor="middle" x="4490.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/Footer.tsx</text>
 </g>
 <!-- pages/CompanyDetail.tsx&#45;&gt;components/Footer.tsx -->
@@ -456,14 +456,14 @@
 <!-- components/about/CareerSection.tsx -->
 <g id="node48" class="node">
 <title>components/about/CareerSection.tsx</title>
-<ellipse fill="lightgreen" stroke="lightgreen" cx="10245.39" cy="-234" rx="182.77" ry="18"/>
-<text text-anchor="middle" x="10245.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/about/CareerSection.tsx</text>
+<ellipse fill="lightblue" stroke="lightblue" cx="10240.39" cy="-234" rx="182.77" ry="18"/>
+<text text-anchor="middle" x="10240.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/about/CareerSection.tsx</text>
 </g>
 <!-- pages/AboutMe.tsx&#45;&gt;components/about/CareerSection.tsx -->
 <g id="edge42" class="edge">
 <title>pages/AboutMe.tsx&#45;&gt;components/about/CareerSection.tsx</title>
-<path fill="none" stroke="black" d="M9081.46,-299.25C9304.27,-286.95 9828.43,-258.02 10090.52,-243.55"/>
-<polygon fill="black" stroke="black" points="9081.2,-295.76 9071.4,-299.81 9081.58,-302.75 9081.2,-295.76"/>
+<path fill="none" stroke="black" d="M9081.57,-299.23C9303.62,-286.92 9824.45,-258.05 10085.51,-243.58"/>
+<polygon fill="black" stroke="black" points="9081.34,-295.73 9071.55,-299.78 9081.73,-302.72 9081.34,-295.73"/>
 </g>
 <!-- components/about/ProjectsSection.tsx -->
 <g id="node49" class="node">
@@ -522,7 +522,7 @@
 <!-- components/ui/input.tsx -->
 <g id="node60" class="node">
 <title>components/ui/input.tsx</title>
-<ellipse fill="orange" stroke="orange" cx="3169.39" cy="-162" rx="122.68" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3169.39" cy="-162" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="3169.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/input.tsx</text>
 </g>
 <!-- pages/Signup.tsx&#45;&gt;components/ui/input.tsx -->
@@ -546,7 +546,7 @@
 <!-- components/ui/button.tsx -->
 <g id="node94" class="node">
 <title>components/ui/button.tsx</title>
-<ellipse fill="orange" stroke="orange" cx="5247.39" cy="-90" rx="129.18" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="5247.39" cy="-90" rx="129.18" ry="18"/>
 <text text-anchor="middle" x="5247.39" y="-86.3" font-family="Times,serif" font-size="14.00">components/ui/button.tsx</text>
 </g>
 <!-- pages/Signup.tsx&#45;&gt;components/ui/button.tsx -->
@@ -558,7 +558,7 @@
 <!-- components/ui/separator.tsx -->
 <g id="node97" class="node">
 <title>components/ui/separator.tsx</title>
-<ellipse fill="orange" stroke="orange" cx="2588.39" cy="-162" rx="142.17" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="2588.39" cy="-162" rx="142.17" ry="18"/>
 <text text-anchor="middle" x="2588.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/separator.tsx</text>
 </g>
 <!-- pages/Signup.tsx&#45;&gt;components/ui/separator.tsx -->
@@ -576,7 +576,7 @@
 <!-- hooks/useAuth.tsx -->
 <g id="node26" class="node">
 <title>hooks/useAuth.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="4072.39" cy="-162" rx="95.58" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="4072.39" cy="-162" rx="95.58" ry="18"/>
 <text text-anchor="middle" x="4072.39" y="-158.3" font-family="Times,serif" font-size="14.00">hooks/useAuth.tsx</text>
 </g>
 <!-- pages/ProductDetail.tsx&#45;&gt;hooks/useAuth.tsx -->
@@ -606,7 +606,7 @@
 <!-- hooks/useCompanies.tsx -->
 <g id="node27" class="node">
 <title>hooks/useCompanies.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="5422.39" cy="-306" rx="124.58" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="5422.39" cy="-306" rx="124.58" ry="18"/>
 <text text-anchor="middle" x="5422.39" y="-302.3" font-family="Times,serif" font-size="14.00">hooks/useCompanies.tsx</text>
 </g>
 <!-- pages/MyCompanies.tsx&#45;&gt;hooks/useCompanies.tsx -->
@@ -630,7 +630,7 @@
 <!-- components/companies/CompaniesSearch.tsx -->
 <g id="node52" class="node">
 <title>components/companies/CompaniesSearch.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3362.39" cy="-234" rx="222.06" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3362.39" cy="-234" rx="222.06" ry="18"/>
 <text text-anchor="middle" x="3362.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/companies/CompaniesSearch.tsx</text>
 </g>
 <!-- pages/MyCompanies.tsx&#45;&gt;components/companies/CompaniesSearch.tsx -->
@@ -642,7 +642,7 @@
 <!-- components/companies/CompaniesHero.tsx -->
 <g id="node53" class="node">
 <title>components/companies/CompaniesHero.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3750.39" cy="-306" rx="213.36" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3750.39" cy="-306" rx="213.36" ry="18"/>
 <text text-anchor="middle" x="3750.39" y="-302.3" font-family="Times,serif" font-size="14.00">components/companies/CompaniesHero.tsx</text>
 </g>
 <!-- pages/MyCompanies.tsx&#45;&gt;components/companies/CompaniesHero.tsx -->
@@ -654,7 +654,7 @@
 <!-- components/companies/CompaniesGrid.tsx -->
 <g id="node54" class="node">
 <title>components/companies/CompaniesGrid.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="4911.39" cy="-234" rx="210.66" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="4911.39" cy="-234" rx="210.66" ry="18"/>
 <text text-anchor="middle" x="4911.39" y="-230.3" font-family="Times,serif" font-size="14.00">components/companies/CompaniesGrid.tsx</text>
 </g>
 <!-- pages/MyCompanies.tsx&#45;&gt;components/companies/CompaniesGrid.tsx -->
@@ -966,7 +966,7 @@
 <!-- components/AuthButton.tsx -->
 <g id="node31" class="node">
 <title>components/AuthButton.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="3818.39" cy="-162" rx="140.28" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="3818.39" cy="-162" rx="140.28" ry="18"/>
 <text text-anchor="middle" x="3818.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/AuthButton.tsx</text>
 </g>
 <!-- components/AuthButton.tsx&#45;&gt;integrations/supabase/client.ts -->
@@ -1054,9 +1054,9 @@
 <polygon fill="black" stroke="black" points="3826.06,-206.88 3831.94,-215.7 3832.84,-205.14 3826.06,-206.88"/>
 </g>
 <!-- components/data/sweden_small.png -->
-<g id="node105" class="node">
+<g id="node108" class="node">
 <title>components/data/sweden_small.png</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="4552.39" cy="-162" rx="178.17" ry="18"/>
+<ellipse fill="yellow" stroke="yellow" cx="4552.39" cy="-162" rx="178.17" ry="18"/>
 <text text-anchor="middle" x="4552.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/sweden_small.png</text>
 </g>
 <!-- components/Footer.tsx&#45;&gt;components/data/sweden_small.png -->
@@ -1068,20 +1068,20 @@
 <!-- components/CompanyCard.tsx -->
 <g id="node35" class="node">
 <title>components/CompanyCard.tsx</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="7550.39" cy="-162" rx="152.97" ry="18"/>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="7550.39" cy="-162" rx="152.97" ry="18"/>
 <text text-anchor="middle" x="7550.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/CompanyCard.tsx</text>
 </g>
 <!-- components/ui/card.tsx -->
 <g id="node68" class="node">
 <title>components/ui/card.tsx</title>
-<ellipse fill="lightgreen" stroke="lightgreen" cx="10124.39" cy="-90" rx="118.88" ry="18"/>
-<text text-anchor="middle" x="10124.39" y="-86.3" font-family="Times,serif" font-size="14.00">components/ui/card.tsx</text>
+<ellipse fill="lightgreen" stroke="lightgreen" cx="10119.39" cy="-90" rx="118.88" ry="18"/>
+<text text-anchor="middle" x="10119.39" y="-86.3" font-family="Times,serif" font-size="14.00">components/ui/card.tsx</text>
 </g>
 <!-- components/CompanyCard.tsx&#45;&gt;components/ui/card.tsx -->
 <g id="edge112" class="edge">
 <title>components/CompanyCard.tsx&#45;&gt;components/ui/card.tsx</title>
-<path fill="none" stroke="black" d="M7707.57,-156.73C8182.18,-143.82 9593.55,-105.44 10008.45,-94.15"/>
-<polygon fill="black" stroke="black" points="7707.46,-153.23 7697.56,-157 7707.65,-160.22 7707.46,-153.23"/>
+<path fill="none" stroke="black" d="M7707.61,-156.72C8181.5,-143.8 9588.87,-105.46 10003.32,-94.16"/>
+<polygon fill="black" stroke="black" points="7707.17,-153.23 7697.27,-157 7707.36,-160.22 7707.17,-153.23"/>
 </g>
 <!-- components/company/CompanyHeader.tsx&#45;&gt;types/company.ts -->
 <g id="edge113" class="edge">
@@ -1182,98 +1182,98 @@
 <!-- components/about/CareerSection.tsx&#45;&gt;components/ui/card.tsx -->
 <g id="edge129" class="edge">
 <title>components/about/CareerSection.tsx&#45;&gt;components/ui/card.tsx</title>
-<path fill="none" stroke="black" d="M10236.68,-206.23C10229.59,-187.35 10218.17,-162.28 10202.39,-144 10189.56,-129.13 10171.61,-116.55 10156.18,-107.39"/>
-<polygon fill="black" stroke="black" points="10233.42,-207.5 10240.09,-215.73 10240.01,-205.14 10233.42,-207.5"/>
+<path fill="none" stroke="black" d="M10231.68,-206.23C10224.59,-187.35 10213.17,-162.28 10197.39,-144 10184.56,-129.13 10166.61,-116.55 10151.18,-107.39"/>
+<polygon fill="black" stroke="black" points="10228.42,-207.5 10235.09,-215.73 10235.01,-205.14 10228.42,-207.5"/>
 </g>
 <!-- components/ui/avatar.tsx -->
 <g id="node83" class="node">
 <title>components/ui/avatar.tsx</title>
-<ellipse fill="lightgreen" stroke="lightgreen" cx="10419.39" cy="-162" rx="127.28" ry="18"/>
-<text text-anchor="middle" x="10419.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/avatar.tsx</text>
+<ellipse fill="orange" stroke="orange" cx="10414.39" cy="-162" rx="127.28" ry="18"/>
+<text text-anchor="middle" x="10414.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/avatar.tsx</text>
 </g>
 <!-- components/about/CareerSection.tsx&#45;&gt;components/ui/avatar.tsx -->
 <g id="edge130" class="edge">
 <title>components/about/CareerSection.tsx&#45;&gt;components/ui/avatar.tsx</title>
-<path fill="none" stroke="black" d="M10296.12,-212.59C10322.63,-201.93 10354.61,-189.06 10379.35,-179.11"/>
-<polygon fill="black" stroke="black" points="10294.6,-209.43 10286.63,-216.41 10297.21,-215.93 10294.6,-209.43"/>
+<path fill="none" stroke="black" d="M10291.12,-212.59C10317.63,-201.93 10349.61,-189.06 10374.35,-179.11"/>
+<polygon fill="black" stroke="black" points="10289.6,-209.43 10281.63,-216.41 10292.21,-215.93 10289.6,-209.43"/>
 </g>
 <!-- components/data/MyAvatar.png -->
-<g id="node106" class="node">
+<g id="node105" class="node">
 <title>components/data/MyAvatar.png</title>
-<ellipse fill="lightgreen" stroke="lightgreen" cx="10419.39" cy="-90" rx="157.87" ry="18"/>
-<text text-anchor="middle" x="10419.39" y="-86.3" font-family="Times,serif" font-size="14.00">components/data/MyAvatar.png</text>
+<ellipse fill="yellow" stroke="yellow" cx="10414.39" cy="-90" rx="157.87" ry="18"/>
+<text text-anchor="middle" x="10414.39" y="-86.3" font-family="Times,serif" font-size="14.00">components/data/MyAvatar.png</text>
 </g>
 <!-- components/about/CareerSection.tsx&#45;&gt;components/data/MyAvatar.png -->
 <g id="edge131" class="edge">
 <title>components/about/CareerSection.tsx&#45;&gt;components/data/MyAvatar.png</title>
-<path fill="none" stroke="black" d="M10250.95,-206.16C10256.27,-186.62 10266.1,-160.74 10283.39,-144 10301.69,-126.28 10326.58,-114.31 10350.06,-106.3"/>
-<polygon fill="black" stroke="black" points="10247.52,-205.45 10248.51,-215.99 10254.32,-207.13 10247.52,-205.45"/>
+<path fill="none" stroke="black" d="M10245.95,-206.16C10251.27,-186.62 10261.1,-160.74 10278.39,-144 10296.69,-126.28 10321.58,-114.31 10345.06,-106.3"/>
+<polygon fill="black" stroke="black" points="10242.52,-205.45 10243.51,-215.99 10249.32,-207.13 10242.52,-205.45"/>
 </g>
 <!-- components/about/ProjectsSection.tsx&#45;&gt;components/ui/card.tsx -->
 <g id="edge133" class="edge">
 <title>components/about/ProjectsSection.tsx&#45;&gt;components/ui/card.tsx</title>
-<path fill="none" stroke="black" d="M9884.67,-223.97C10005.86,-215.77 10150.14,-201.62 10169.39,-180 10188.62,-158.41 10163.61,-127.11 10143.9,-107.96"/>
-<polygon fill="black" stroke="black" points="9884.26,-220.49 9874.51,-224.64 9884.72,-227.47 9884.26,-220.49"/>
+<path fill="none" stroke="black" d="M9883.7,-223.78C10003.38,-215.51 10145.41,-201.34 10164.39,-180 10183.61,-158.39 10158.6,-127.1 10138.89,-107.96"/>
+<polygon fill="black" stroke="black" points="9883.41,-220.29 9873.67,-224.46 9883.88,-227.28 9883.41,-220.29"/>
 </g>
 <!-- components/ui/aspect&#45;ratio.tsx -->
 <g id="node71" class="node">
 <title>components/ui/aspect&#45;ratio.tsx</title>
-<ellipse fill="orange" stroke="orange" cx="8816.39" cy="-162" rx="153.27" ry="18"/>
-<text text-anchor="middle" x="8816.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/aspect&#45;ratio.tsx</text>
+<ellipse fill="orange" stroke="orange" cx="8823.39" cy="-162" rx="153.27" ry="18"/>
+<text text-anchor="middle" x="8823.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/ui/aspect&#45;ratio.tsx</text>
 </g>
 <!-- components/about/ProjectsSection.tsx&#45;&gt;components/ui/aspect&#45;ratio.tsx -->
 <g id="edge132" class="edge">
 <title>components/about/ProjectsSection.tsx&#45;&gt;components/ui/aspect&#45;ratio.tsx</title>
-<path fill="none" stroke="black" d="M9570.09,-220.38C9551.69,-218.85 9533.1,-217.35 9515.39,-216 9277.33,-197.79 9217.28,-200.39 8979.39,-180 8961.53,-178.47 8942.59,-176.66 8924.18,-174.81"/>
-<polygon fill="black" stroke="black" points="9570.03,-223.89 9580.29,-221.23 9570.61,-216.91 9570.03,-223.89"/>
-</g>
-<!-- components/data/passtider&#45;reviews.webp -->
-<g id="node107" class="node">
-<title>components/data/passtider&#45;reviews.webp</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="9191.39" cy="-162" rx="203.36" ry="18"/>
-<text text-anchor="middle" x="9191.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/passtider&#45;reviews.webp</text>
-</g>
-<!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/passtider&#45;reviews.webp -->
-<g id="edge134" class="edge">
-<title>components/about/ProjectsSection.tsx&#45;&gt;components/data/passtider&#45;reviews.webp</title>
-<path fill="none" stroke="black" d="M9599.09,-217.67C9509.54,-205.66 9385.87,-189.08 9298.28,-177.33"/>
-<polygon fill="black" stroke="black" points="9598.64,-221.14 9609.01,-219 9599.57,-214.2 9598.64,-221.14"/>
-</g>
-<!-- components/data/citas&#45;review.webp -->
-<g id="node108" class="node">
-<title>components/data/citas&#45;review.webp</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="9589.39" cy="-162" rx="176.27" ry="18"/>
-<text text-anchor="middle" x="9589.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/citas&#45;review.webp</text>
-</g>
-<!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/citas&#45;review.webp -->
-<g id="edge135" class="edge">
-<title>components/about/ProjectsSection.tsx&#45;&gt;components/data/citas&#45;review.webp</title>
-<path fill="none" stroke="black" d="M9674.35,-210.96C9656.5,-200.88 9635.69,-189.13 9619.13,-179.79"/>
-<polygon fill="black" stroke="black" points="9672.95,-214.19 9683.38,-216.05 9676.39,-208.09 9672.95,-214.19"/>
+<path fill="none" stroke="black" d="M9570.09,-220.39C9551.69,-218.86 9533.1,-217.36 9515.39,-216 9280.43,-197.92 9221.18,-200.23 8986.39,-180 8968.68,-178.47 8949.89,-176.68 8931.62,-174.84"/>
+<polygon fill="black" stroke="black" points="9570.03,-223.9 9580.29,-221.25 9570.61,-216.93 9570.03,-223.9"/>
 </g>
 <!-- components/data/MorrisSimonsCV.pdf -->
-<g id="node109" class="node">
+<g id="node106" class="node">
 <title>components/data/MorrisSimonsCV.pdf</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="9972.39" cy="-162" rx="188.47" ry="18"/>
-<text text-anchor="middle" x="9972.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/MorrisSimonsCV.pdf</text>
+<ellipse fill="yellow" stroke="yellow" cx="9183.39" cy="-162" rx="188.47" ry="18"/>
+<text text-anchor="middle" x="9183.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/MorrisSimonsCV.pdf</text>
 </g>
 <!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/MorrisSimonsCV.pdf -->
 <g id="edge136" class="edge">
 <title>components/about/ProjectsSection.tsx&#45;&gt;components/data/MorrisSimonsCV.pdf</title>
-<path fill="none" stroke="black" d="M9782.92,-214.21C9823.37,-203.28 9873.83,-189.64 9912.5,-179.19"/>
-<polygon fill="black" stroke="black" points="9781.88,-210.86 9773.14,-216.85 9783.7,-217.62 9781.88,-210.86"/>
+<path fill="none" stroke="black" d="M9597.54,-217.7C9505.56,-205.55 9378.02,-188.71 9288.86,-176.93"/>
+<polygon fill="black" stroke="black" points="9597.36,-221.21 9607.73,-219.04 9598.27,-214.27 9597.36,-221.21"/>
+</g>
+<!-- components/data/passtider&#45;reviews.webp -->
+<g id="node107" class="node">
+<title>components/data/passtider&#45;reviews.webp</title>
+<ellipse fill="yellow" stroke="yellow" cx="9593.39" cy="-162" rx="203.36" ry="18"/>
+<text text-anchor="middle" x="9593.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/passtider&#45;reviews.webp</text>
+</g>
+<!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/passtider&#45;reviews.webp -->
+<g id="edge134" class="edge">
+<title>components/about/ProjectsSection.tsx&#45;&gt;components/data/passtider&#45;reviews.webp</title>
+<path fill="none" stroke="black" d="M9675.67,-211C9658.53,-201 9638.56,-189.35 9622.59,-180.03"/>
+<polygon fill="black" stroke="black" points="9673.94,-214.04 9684.34,-216.05 9677.47,-207.99 9673.94,-214.04"/>
 </g>
 <!-- components/data/cv&#45;preview.webp -->
-<g id="node110" class="node">
+<g id="node109" class="node">
 <title>components/data/cv&#45;preview.webp</title>
-<ellipse fill="lightblue" stroke="lightblue" cx="8474.39" cy="-162" rx="170.07" ry="18"/>
-<text text-anchor="middle" x="8474.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/cv&#45;preview.webp</text>
+<ellipse fill="yellow" stroke="yellow" cx="9985.39" cy="-162" rx="170.07" ry="18"/>
+<text text-anchor="middle" x="9985.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/cv&#45;preview.webp</text>
 </g>
 <!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/cv&#45;preview.webp -->
 <g id="edge137" class="edge">
 <title>components/about/ProjectsSection.tsx&#45;&gt;components/data/cv&#45;preview.webp</title>
-<path fill="none" stroke="black" d="M9572.91,-220.17C9553.6,-218.63 9534.01,-217.19 9515.39,-216 9133.17,-191.61 9036.51,-206.01 8654.39,-180 8634.35,-178.64 8613.08,-176.89 8592.45,-175.04"/>
-<polygon fill="black" stroke="black" points="9572.73,-223.67 9582.98,-220.99 9573.3,-216.69 9572.73,-223.67"/>
+<path fill="none" stroke="black" d="M9785.64,-214.41C9828.68,-203.33 9882.73,-189.42 9923.75,-178.86"/>
+<polygon fill="black" stroke="black" points="9784.61,-211.06 9775.79,-216.94 9786.35,-217.84 9784.61,-211.06"/>
+</g>
+<!-- components/data/citas&#45;review.webp -->
+<g id="node110" class="node">
+<title>components/data/citas&#45;review.webp</title>
+<ellipse fill="yellow" stroke="yellow" cx="8475.39" cy="-162" rx="176.27" ry="18"/>
+<text text-anchor="middle" x="8475.39" y="-158.3" font-family="Times,serif" font-size="14.00">components/data/citas&#45;review.webp</text>
+</g>
+<!-- components/about/ProjectsSection.tsx&#45;&gt;components/data/citas&#45;review.webp -->
+<g id="edge135" class="edge">
+<title>components/about/ProjectsSection.tsx&#45;&gt;components/data/citas&#45;review.webp</title>
+<path fill="none" stroke="black" d="M9572.91,-220.18C9553.6,-218.64 9534.01,-217.19 9515.39,-216 9136.27,-191.75 9040.44,-205.3 8661.39,-180 8640.69,-178.62 8618.71,-176.86 8597.39,-175.01"/>
+<polygon fill="black" stroke="black" points="9572.73,-223.68 9582.98,-220.99 9573.3,-216.7 9572.73,-223.68"/>
 </g>
 <!-- components/companies/CompaniesSearch.tsx&#45;&gt;components/ui/input.tsx -->
 <g id="edge138" class="edge">
@@ -1518,8 +1518,8 @@
 <!-- components/ui/avatar.tsx&#45;&gt;components/data/MyAvatar.png -->
 <g id="edge156" class="edge">
 <title>components/ui/avatar.tsx&#45;&gt;components/data/MyAvatar.png</title>
-<path fill="none" stroke="black" d="M10419.39,-133.67C10419.39,-125.05 10419.39,-115.79 10419.39,-108.1"/>
-<polygon fill="black" stroke="black" points="10415.89,-133.7 10419.39,-143.7 10422.89,-133.7 10415.89,-133.7"/>
+<path fill="none" stroke="black" d="M10414.39,-133.67C10414.39,-125.05 10414.39,-115.79 10414.39,-108.1"/>
+<polygon fill="black" stroke="black" points="10410.89,-133.7 10414.39,-143.7 10417.89,-133.7 10410.89,-133.7"/>
 </g>
 <!-- components/ui/sonner.tsx -->
 <g id="node84" class="node">
