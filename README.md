@@ -111,6 +111,9 @@ The tool provides:
 
 
 ## TODO:
+- Fix the read me to exaplain the new updates.
+- Do some fixes for yellow unwanted files.
+- Do some test to replicate diffrent scenarios where not used files are created.
 - Some files are imported in the header but not used in the project.
 - No delete function yet.
 - Build it as a API
