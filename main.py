@@ -319,8 +319,6 @@ def main():
     
     github_token = os.environ.get('GITHUB_TOKEN')
     
-    # Get repo URL and myCompanies file
-    my_companies_file = None
     if len(sys.argv) > 1:
         repo_input = sys.argv[1].strip()
         if repo_input.startswith('https://github.com/'):
@@ -334,11 +332,7 @@ def main():
         # Check for target file argument
         if len(sys.argv) > 2:
             target_file = sys.argv[2].strip()
-            if target_file.lower() == 'mycompanies.tsx':
-                my_companies_file = 'pages/MyCompanies.tsx'
-            else:
-                my_companies_file = target_file
-    else:
+            
         repo_url = input("GitHub repo URL: ").strip()
     
     if not repo_url:
@@ -356,7 +350,7 @@ def main():
             
             # Analyze
             repo_name = repo_url.split('/')[-1].replace('.git', '')
-            analyze_repository(src_dir, repo_name, my_companies_file)
+            analyze_repository(src_dir, repo_name, target_file)
             
     except Exception as e:
         print(f"Error: {e}")
