@@ -162,7 +162,7 @@ def resolve_import(import_path, source_file, root_dir):
     return None
 
 
-def analyze_repository(root_dir, repo_name):
+def analyze_repository(root_dir, repo_name, my_companies_file=None):
     """Main analysis function"""
     print(f"Analyzing {repo_name} in {root_dir}")
     
@@ -220,6 +220,12 @@ def analyze_repository(root_dir, repo_name):
     
     unused = [node for node in graph.nodes() if node not in connected]
     
+    # Find files connected to myCompanies.tsx if specified
+    my_companies_connected = set()
+    if my_companies_file and my_companies_file in graph:
+        my_companies_connected.update(nx.descendants(graph, my_companies_file))
+        my_companies_connected.add(my_companies_file)
+    
     print(f"\nResults:")
     print(f"Entry points: {entry_points}")
     print(f"Connected components: {len(connected)}")
@@ -235,7 +241,9 @@ def analyze_repository(root_dir, repo_name):
     
     # Color nodes
     for node in graph.nodes():
-        if 'components/ui' in node.lower():
+        if my_companies_file and node in my_companies_connected:
+            graph.nodes[node]['color'] = 'lightgreen'
+        elif 'components/ui' in node.lower():
             graph.nodes[node]['color'] = 'orange'
         elif node in connected:
             graph.nodes[node]['color'] = 'lightblue'
@@ -261,7 +269,8 @@ def main():
     
     github_token = os.environ.get('GITHUB_TOKEN')
     
-    # Get repo URL
+    # Get repo URL and myCompanies file
+    my_companies_file = None
     if len(sys.argv) > 1:
         repo_input = sys.argv[1].strip()
         if repo_input.startswith('https://github.com/'):
@@ -269,8 +278,12 @@ def main():
         elif '/' in repo_input:
             repo_url = f"https://github.com/{repo_input}"
         else:
-            print("Use: python script.py owner/repo")
+            print("Use: python script.py owner/repo [myCompanies.tsx]")
             return
+        
+        # Check for myCompanies file argument
+        if len(sys.argv) > 2 and sys.argv[2].strip().lower() == 'mycompanies.tsx':
+            my_companies_file = 'pages/MyCompanies.tsx'
     else:
         repo_url = input("GitHub repo URL: ").strip()
     
@@ -289,7 +302,7 @@ def main():
             
             # Analyze
             repo_name = repo_url.split('/')[-1].replace('.git', '')
-            analyze_repository(src_dir, repo_name)
+            analyze_repository(src_dir, repo_name, my_companies_file)
             
     except Exception as e:
         print(f"Error: {e}")
