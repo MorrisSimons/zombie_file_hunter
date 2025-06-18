@@ -197,7 +197,7 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
                 if resolved and resolved != file:
                     try:
                         target_rel = str(resolved.relative_to(root_dir))
-                        graph.add_edge(file_rel, target_rel)
+                        graph.add_edge(file_rel, target_rel, dir='back')
                     except ValueError:
                         continue  # Outside root directory
         except Exception as e:
