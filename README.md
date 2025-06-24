@@ -12,7 +12,7 @@
 
 ## Story
 
-When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages that had multiple subcomponents, I discovered that the some of related files remained in the repository creating a mess with alot of unused files. I wanted to clean up the codebase and remove these unused files.
+When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages that had multiple subcomponents, I discovered that some of the related files remained in the repository was unused. I wanted to clean up the codebase and remove these unused files.
 
 #### This is the page we will use for our sample:
 
