@@ -16,33 +16,31 @@ When I used Loveable, I found it generated code and functions that I sometimes d
 
 #### This is the page we will use for our sample:
 
-![Sample page interface](assets/image-2.png)
+
 
 **Link to code:** [https://github.com/MorrisSimons/sample\_test\_page](https://github.com/MorrisSimons/sample_test_page)
 
-#### The first image below doesn't say much; except that many files are not used in the project. It also demonstrates what the output looks like:
 
-![Console output showing analysis results](assets/image.png)
 
 #### We only want to look at a small portion of the image; that covers four points to help understand different parts of the project:
+![Dependency graph visualization showing used and unused files](assets/image.png)
 
-![Dependency graph visualization showing used and unused files](assets/image-3.png)
+* Unused files are marked in red.
+* Unused files part of the UI folder are marked in orange.
+* Used files are marked in blue are used.
 
-* An unused externally added file (marked red). The file `testapge.tsx` is not used (left of `main.tsx`).
-* Unused files located in `components/ui/...` (marked red), for example, the file to the right of `main.tsx`.
-* Unused UI components (marked red) connected to `components/ui/button.tsx`. The button itself is used, so it's marked blue.
-* Used files like `pages/NotFound.tsx`, also marked blue.
+* Yellow files are non-code files like images, css etc. (no only serves as a debug functionallity)
+* Green files are used to find all the subcompents to a file (a debug functionality) 
 
 **Important notes about the code:**
-* All the redfiles are unsued and all the blue ones are used in the main.tsx file.
 * Files in the UI folder are typically generated uniformly for all projects but aren't always utilized. This explains why the sample repository has many unused files.
-* Some files might be connected indirectly (e.g., to `button.tsx`) but remain unused by the main project. All `.js`, `.jsx`, `.ts`, `.tsx`, and `.css` files not directly connected to the main project are marked red.
+* Some files might be connected indirectly (e.g., to `button.tsx`) but remain unused by the `main.tsx` so it's not used in the project. All `.js`, `.jsx`, `.ts`, `.tsx` files not directly connected to the main project are marked red.
 
 The primary purpose of this project is not just cleaning up the UI folder but identifying unused or forgotten files, such as leftover subcomponents like `testapge.tsx`. If you're interested, you can explore a larger example project in the `assets` folder of this repository.
 
 ## Example Outputs
 
-This repository includes several example outputs in the `assets/` folder and here in the main project folder:
+This repository includes several example outputs in the `example_folder/`:
 - **Real Estate Mapstore**: [`assets/import_graph_realestate-mapstore.svg`](assets/import_graph_realestate-mapstore.svg) - Analysis of a larger, more complex project
 - **Sample Test Page Analysis**: [`import_graph_sample_test_page.svg`](import_graph_sample_test_page.svg) - Analysis of the sample repository mentioned above
 Each analysis generates both `.dot` (source) and `.svg` (visual) files that show the dependency relationships between files in your project.
@@ -125,19 +123,18 @@ The tool provides:
 * **SVG File:** Visual graph with color-coded nodes (requires Graphviz):
 
 ### Color Coding System
-
-* 🟢 **Light Green:** Files connected to the target file (when specified, e.g., `myCompanies.tsx`)
-* 🟡 **Yellow:** Non-code files (assets, documents, CSS, etc.)
-* 🟠 **Orange:** UI component files (`components/ui/`)
 * 🔵 **Light Blue:** Used/connected code files
-* 🔴 **Red:** Unused or "zombie" files
+* 🟢 **Light Green:** Files connected to the target file (when specified, e.g., `myCompanies.tsx`) "used to find a page and it's subcomponets/debugging"
+* 🟡 **Yellow:** Non-code files (assets, documents, CSS, etc.)
+* 🟠 **Orange:** unused UI component files (`components/ui/`)
+* 🔴 **Red:** Unused "zombie" files
 
 ### Usage with Target File
 
 To highlight files connected to a specific component:
 
 ```bash
-python main.py "https://github.com/owner/repo" myCompanies.tsx
+python main.py "https://github.com/owner/repo" Pages/MyCompanies.tsx
 ```
 
 This will mark all files that are dependencies of `myCompanies.tsx` in light green, making it easy to see which files are specifically related to that component.
@@ -146,8 +143,8 @@ This will mark all files that are dependencies of `myCompanies.tsx` in light gre
 - [x] ~~Fix the README to explain the new updates~~ - **COMPLETED**
 - [x] ~~Add yellow color for non-code files (assets, PDFs, etc.)~~ - **COMPLETED** 
 - [x] ~~Add target file highlighting with green color~~ - **COMPLETED**
-- [ ] Fix arguments input repo error handling
-- [ ] Add automated testing for different scenarios where unused files are created
+- [x] Fix arguments input repo error handling
+- [ ] Test different scenarios where unused files are created and why.
 - [ ] Improve detection of files imported in headers but not used in the project
 - [ ] Add delete function for unused files
 - [ ] Build it as an API

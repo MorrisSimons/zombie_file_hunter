@@ -293,10 +293,10 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
             graph.nodes[node]['color'] = 'yellow'
         elif my_companies_file and node in my_companies_connected:
             graph.nodes[node]['color'] = 'lightgreen'
-        elif 'components/ui' in node.lower():
-            graph.nodes[node]['color'] = 'orange'
         elif node in connected:
             graph.nodes[node]['color'] = 'lightblue'
+        elif 'components/ui' in node.lower():
+            graph.nodes[node]['color'] = 'orange'
         else:
             graph.nodes[node]['color'] = 'red'
         graph.nodes[node]['style'] = 'filled'
@@ -332,6 +332,9 @@ def main():
         # Check for target file argument
         if len(sys.argv) > 2:
             target_file = sys.argv[2].strip()
+        else:
+            target_file = None
+            
     
     
     try:
