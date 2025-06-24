@@ -326,17 +326,13 @@ def main():
         elif '/' in repo_input:
             repo_url = f"https://github.com/{repo_input}"
         else:
-            print("Use: python script.py owner/repo [myCompanies.tsx]")
-            return
+            repo_url = input("GitHub repo URL: ").strip()
+            
         
         # Check for target file argument
         if len(sys.argv) > 2:
             target_file = sys.argv[2].strip()
-            
-        repo_url = input("GitHub repo URL: ").strip()
     
-    if not repo_url:
-        return
     
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
