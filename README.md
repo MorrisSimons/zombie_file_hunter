@@ -82,41 +82,74 @@ python main.py owner/private-repo
 
 ### Complete Example
 
-Here's a full example, including activating a virtual environment, setting the GitHub token, and analyzing a repository:
+Here's a full example, including activating a virtual environment, setting the GitHub token, and analyzing a repository with target file highlighting:
 
 ```bash
-export GITHUB_TOKEN=GH_token && python main.py "https://github.com/MorrisSimons/sample_test_page"
+export GITHUB_TOKEN=GH_token && python main.py "https://github.com/MorrisSimons/realestate-mapstore" myCompanies.tsx
+```
+
+This command will:
+- Download and analyze the repository
+- Highlight all files connected to `myCompanies.tsx` in green
+- Mark non-code files (images, PDFs, CSS) in yellow
+- Show unused files in red
+- Generate both `.dot` and `.svg` visualization files
+
+**Sample Output:**
+```
+Found 102 code files and 8 other files (110 total)
+Graph: 110 nodes, 160 edges
+Connected components: 73
+Unused components: 37
 ```
 
 ## How It Works
 
 1. **Repository Download:** Clones the repository (preferred) or downloads a ZIP as fallback.
 2. **Source Discovery:** Identifies the main source directory (`src/` or root).
-3. **File Scanning:** Searches for JavaScript/TypeScript files (`.js`, `.jsx`, `.ts`, `.tsx`).
-4. **Import Analysis:** Extracts import statements and resolves file paths.
+3. **File Scanning:** Searches for all relevant files including:
+   - Code files: JavaScript/TypeScript files (`.js`, `.jsx`, `.ts`, `.tsx`)
+   - Asset files: Images, documents, and other resources (`.png`, `.jpg`, `.pdf`, `.webp`, `.css`, `.md`, etc.)
+4. **Import Analysis:** Extracts import statements and resolves file paths for code files.
 5. **Graph Building:** Builds a directed graph representing file dependencies.
 6. **Unused Detection:** Finds files not reachable from the main entry points.
-7. **Visualization:** Produces visual graphs in DOT and SVG formats.
+7. **Target Analysis:** Optionally highlights files connected to a specific target file.
+8. **Visualization:** Produces visual graphs in DOT and SVG formats.
 
 ## Output
 
 The tool provides:
 
-* **Console Output:** Summary report, including count of unused files.
+* **Console Output:** Summary report, including count of unused files and file type breakdown.
 * **DOT File:** Dependency graph in DOT format (`import_graph_<repo>.dot`).
 * **SVG File:** Visual graph with color-coded nodes (requires Graphviz):
 
-  * 🔵 **Blue:** Used or connected files
-  * 🔴 **Red:** Unused or "zombie" files
+### Color Coding System
 
+* 🟢 **Light Green:** Files connected to the target file (when specified, e.g., `myCompanies.tsx`)
+* 🟡 **Yellow:** Non-code files (assets, documents, CSS, etc.)
+* 🟠 **Orange:** UI component files (`components/ui/`)
+* 🔵 **Light Blue:** Used/connected code files
+* 🔴 **Red:** Unused or "zombie" files
+
+### Usage with Target File
+
+To highlight files connected to a specific component:
+
+```bash
+python main.py "https://github.com/owner/repo" myCompanies.tsx
+```
+
+This will mark all files that are dependencies of `myCompanies.tsx` in light green, making it easy to see which files are specifically related to that component.
 
 ## TODO:
-- Fix the read me to exaplain the new updates.
-- Do some fixes for yellow unwanted files.
-- Fix arguments input repo error.
-- Do some test to replicate diffrent scenarios where not used files are created.
-- Some files are imported in the header but not used in the project.
-- No delete function yet.
-- Build it as a API
-- Build it in Go
-- Build it as a docker 
+- [x] ~~Fix the README to explain the new updates~~ - **COMPLETED**
+- [x] ~~Add yellow color for non-code files (assets, PDFs, etc.)~~ - **COMPLETED** 
+- [x] ~~Add target file highlighting with green color~~ - **COMPLETED**
+- [ ] Fix arguments input repo error handling
+- [ ] Add automated testing for different scenarios where unused files are created
+- [ ] Improve detection of files imported in headers but not used in the project
+- [ ] Add delete function for unused files
+- [ ] Build it as an API
+- [ ] Build it in Go
+- [ ] Build it as a Docker container 
