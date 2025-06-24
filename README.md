@@ -16,7 +16,7 @@ When I used Loveable, I found it generated code and functions that I sometimes d
 
 #### This is the page we will use for our sample:
 
-
+![image of the sample test page](assets/image-2.png)
 
 **Link to code:** [https://github.com/MorrisSimons/sample\_test\_page](https://github.com/MorrisSimons/sample_test_page)
 
