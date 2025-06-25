@@ -12,7 +12,7 @@
 
 ## Story
 
-When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages that had multiple subcomponents, I discovered that some of the related files remained in the repository was unused. I wanted to clean up the codebase and remove these unused files.
+When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages with multiple subcomponents, I discovered that some of the related files remained unused in the repository. I wanted to clean up the codebase and remove these unused files.
 
 #### This is the page we will use for our sample:
 
@@ -22,15 +22,15 @@ When I used Loveable, I found it generated code and functions that I sometimes d
 
 
 
-#### We only want to look at a small portion of the image; that covers four points to help understand different parts of the project:
+#### We only want to look at a small portion of the image; which covers five points to help understand different parts of the project:
 ![Dependency graph visualization showing used and unused files](assets/image.png)
 
 * Unused files are marked in red.
 * Unused files part of the UI folder are marked in orange.
-* Used files are marked in blue are used.
+* Used files are marked in blue.
 
-* Yellow files are non-code files like images, css etc. (no only serves as a debug functionallity)
-* Green files are used to find all the subcompents to a file (a debug functionality) 
+* Yellow files are non-code files like images, CSS, etc. (a debug functionality)
+* Green files are used to find all the subcomponents of a file (a debug functionality) 
 
 **Important notes about the code:**
 * Files in the UI folder are typically generated uniformly for all projects but aren't always utilized. This explains why the sample repository has many unused files.
@@ -47,7 +47,7 @@ Each analysis generates both `.dot` (source) and `.svg` (visual) files that show
 
 ### Aim of this Project:
 
-I want to identify and suggest removal of unused files to maintain clean, minimalistic, and readable codebase for lovable projects.
+I want to identify and suggest removing unused files to maintain a clean, minimalistic, and readable codebase for lovable projects.
 
 ## Installation
 
@@ -103,7 +103,7 @@ Unused components: 37
 
 ## How It Works
 
-1. **Repository Download:** Clones the repository (preferred) or downloads a ZIP as fallback.
+1. **Repository Download:** Clones the repository (preferred) or downloads a ZIP as a fallback.
 2. **Source Discovery:** Identifies the main source directory (`src/` or root).
 3. **File Scanning:** Searches for all relevant files including:
    - Code files: JavaScript/TypeScript files (`.js`, `.jsx`, `.ts`, `.tsx`)
@@ -124,7 +124,7 @@ The tool provides:
 
 ### Color Coding System
 * 🔵 **Light Blue:** Used/connected code files
-* 🟢 **Light Green:** Files connected to the target file (when specified, e.g., `myCompanies.tsx`) "used to find a page and it's subcomponets/debugging"
+* 🟢 **Light Green:** Files connected to the target file (when specified, e.g., `myCompanies.tsx`) "used to find a page and it's subcomponents/debugging"
 * 🟡 **Yellow:** Non-code files (assets, documents, CSS, etc.)
 * 🟠 **Orange:** unused UI component files (`components/ui/`)
 * 🔴 **Red:** Unused "zombie" files
@@ -140,10 +140,11 @@ python main.py "https://github.com/owner/repo" Pages/MyCompanies.tsx
 This will mark all files that are dependencies of `myCompanies.tsx` in light green, making it easy to see which files are specifically related to that component.
 
 ## TODO:
-- [x] ~~Fix the README to explain the new updates~~ - **COMPLETED**
-- [x] ~~Add yellow color for non-code files (assets, PDFs, etc.)~~ - **COMPLETED** 
-- [x] ~~Add target file highlighting with green color~~ - **COMPLETED**
+- [x] Fix the README to explain the new updates
+- [x] Add yellow color for non-code files (assets, PDFs, etc.)
+- [x] Add target file highlighting with green color
 - [x] Fix arguments input repo error handling
+- [ ] Minor grammar fixes and file renaming
 - [ ] Test different scenarios where unused files are created and why.
 - [ ] Improve detection of files imported in headers but not used in the project
 - [ ] Add delete function for unused files
