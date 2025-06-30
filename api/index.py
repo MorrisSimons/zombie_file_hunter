@@ -1,0 +1,1 @@
+from app import app  # Expose the Flask app for Vercel serverless deployment 
