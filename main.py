@@ -6,10 +6,10 @@ import pathlib
 import subprocess
 import json
 from urllib.parse import urlparse
+import time
 
 import networkx as nx
 import requests
-from zip_file_helper_function import _download_zip_repo
 
 # Configuration
 ALIASES = {"@/": "src/"}
@@ -42,15 +42,8 @@ def download_repo(repo_url, temp_dir, github_token=None):
         
         if result.returncode == 0 and clone_dir.exists():
             return clone_dir
-    except:
-        pass
-    
-    # Fallback to ZIP download
-    session = requests.Session()
-    if github_token:
-        session.headers.update({"Authorization": f"token {github_token}"})
-    
-    return _download_zip_repo(repo_url, temp_dir, owner, repo, session, github_token)
+    except Exception as e:
+        raise RuntimeError(f"Downloading repo error! {e}")
 
 
 def find_src_directory(repo_dir):
@@ -312,47 +305,55 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
         print("Install Graphviz to generate SVG files")
 
 
+def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
+    """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses file cache."""
+    cache_dir = pathlib.Path('cache')
+    cache_dir.mkdir(exist_ok=True)
+    svg_path = cache_dir / f"{username}_{repo}.svg"
+    cache_lifetime = 3600  # 1 hour
+    if svg_path.exists():
+        mtime = svg_path.stat().st_mtime
+        if time.time() - mtime < cache_lifetime:
+            return str(svg_path)
+    repo_url = f"https://github.com/{username}/{repo}"
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_path = pathlib.Path(temp_dir)
+        repo_dir = download_repo(repo_url, temp_path, github_token)
+        src_dir = find_src_directory(repo_dir)
+        repo_name = repo
+        analyze_repository(src_dir, repo_name, target_file)
+        generated_svg = f"import_graph_{repo_name.replace('/', '_')}.svg"
+        if pathlib.Path(generated_svg).exists():
+            pathlib.Path(generated_svg).replace(svg_path)
+        return str(svg_path)
+
+
 def main():
     """Main entry point"""
     print("GitHub Repository Analyzer")
     print("=" * 30)
-    
     github_token = os.environ.get('GITHUB_TOKEN')
-    
     if len(sys.argv) > 1:
         repo_input = sys.argv[1].strip()
         if repo_input.startswith('https://github.com/'):
             repo_url = repo_input
+            username, repo = repo_url.split('/')[-2:]
         elif '/' in repo_input:
-            repo_url = f"https://github.com/{repo_input}"
+            username, repo = repo_input.split('/')
         else:
             repo_url = input("GitHub repo URL: ").strip()
-            
-        
-        # Check for target file argument
+            username, repo = repo_url.split('/')[-2:]
         if len(sys.argv) > 2:
             target_file = sys.argv[2].strip()
         else:
             target_file = None
-            
-    
-    
-    try:
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_path = pathlib.Path(temp_dir)
-            
-            # Download repo
-            repo_dir = download_repo(repo_url, temp_path, github_token)
-            
-            # Find source directory
-            src_dir = find_src_directory(repo_dir)
-            
-            # Analyze
-            repo_name = repo_url.split('/')[-1].replace('.git', '')
-            analyze_repository(src_dir, repo_name, target_file)
-            
-    except Exception as e:
-        print(f"Error: {e}")
+        try:
+            svg_path = generate_svg_for_github_repo(username, repo, target_file, github_token)
+            print(f"SVG generated at: {svg_path}")
+        except Exception as e:
+            print(f"Error: {e}")
+    else:
+        print("Usage: python main.py <username/repo> [target_file]")
 
 
 if __name__ == "__main__":
