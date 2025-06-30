@@ -24,28 +24,34 @@ EXTERNAL_PACKAGES = ['react', 'typescript', 'next', 'axios', 'lodash', '@radix-u
 
 
 def download_repo(repo_url, temp_dir, github_token=None):
-    """Download GitHub repo using git clone or ZIP fallback"""
+    """Download GitHub repo using ZIP archive via GitHub API (no git required)"""
+    import zipfile
+    import io
+    import os
+
     # Parse URL to get owner/repo
     parsed = urlparse(repo_url)
     path_parts = parsed.path.strip('/').split('/')
     owner, repo = path_parts[0], path_parts[1]
-    
-    clone_dir = temp_dir / repo
-    
-    # Try git clone first
-    try:
-        clone_url = repo_url
-        if github_token:
-            clone_url = repo_url.replace("https://github.com/", f"https://{github_token}@github.com/")
-        
-        cmd = ["git", "clone", "--depth", "1", clone_url, str(clone_dir)]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-        
-        if result.returncode == 0 and clone_dir.exists():
-            return clone_dir
-    except Exception as e:
-        return _download_zip_repo(repo_url, temp_dir, owner, repo, session, github_token)
 
+    # Download ZIP from GitHub API
+    zip_url = f"https://api.github.com/repos/{owner}/{repo}/zipball"
+    headers = {}
+    if github_token:
+        headers['Authorization'] = f'token {github_token}'
+    response = requests.get(zip_url, headers=headers, stream=True)
+    if response.status_code != 200:
+        raise RuntimeError(f"Failed to download repo ZIP: {response.status_code} {response.text}")
+
+    # Extract ZIP to temp_dir
+    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+        zip_ref.extractall(temp_dir)
+        # The extracted folder name is not always predictable, so find it
+        extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
+        if not extracted_dirs:
+            raise RuntimeError("No directory found after extracting repo ZIP")
+        # Return the first directory (should be the repo root)
+        return extracted_dirs[0]
 
 
 def find_src_directory(repo_dir):
