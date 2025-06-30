@@ -282,62 +282,41 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     
     # Generate visualization
     output_file = f"import_graph_{repo_name.replace('/', '_')}"
-    
-    # Color nodes
-    for node in graph.nodes():
-        # Get file extension to determine if it's a code file
-        node_path = root_dir / node
-        is_code_file = node_path.suffix.lower() in {'.ts', '.tsx', '.js', '.jsx'}
-        
-        if not is_code_file:
-            # Non-code files (PDFs, images, etc.) get yellow color
-            graph.nodes[node]['color'] = 'yellow'
-        elif my_companies_file and node in my_companies_connected:
-            graph.nodes[node]['color'] = 'lightgreen'
-        elif node in connected:
-            graph.nodes[node]['color'] = 'lightblue'
-        elif 'components/ui' in node.lower():
-            graph.nodes[node]['color'] = 'orange'
-        else:
-            graph.nodes[node]['color'] = 'red'
-        graph.nodes[node]['style'] = 'filled'
-    
-    # Write DOT file
-    nx.drawing.nx_pydot.write_dot(graph, f"{output_file}.dot")
-    
+    tmp_dir = '/tmp'
+    dot_path = os.path.join(tmp_dir, f"{output_file}.dot")
+    svg_path = os.path.join(tmp_dir, f"{output_file}.svg")
+    nx.drawing.nx_pydot.write_dot(graph, dot_path)
     # Generate SVG
     try:
-        subprocess.run(["dot", "-Tsvg", f"{output_file}.dot", "-o", f"{output_file}.svg"], check=True)
-        print(f"Generated {output_file}.svg")
+        subprocess.run(["dot", "-Tsvg", dot_path, "-o", svg_path], check=True)
+        print(f"Generated {svg_path}")
     except:
         print("Install Graphviz to generate SVG files")
+    return svg_path
 
 
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
     """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses file cache."""
     cache_dir = pathlib.Path('cache')
     cache_dir.mkdir(exist_ok=True)
-    svg_path = cache_dir / f"{username}_{repo}.svg"
+    cache_svg_path = cache_dir / f"{username}_{repo}.svg"
     cache_lifetime = 3600  # 1 hour
-    if svg_path.exists():
-        mtime = svg_path.stat().st_mtime
+    if cache_svg_path.exists():
+        mtime = cache_svg_path.stat().st_mtime
         if time.time() - mtime < cache_lifetime:
-            return str(svg_path)
+            return str(cache_svg_path)
     repo_url = f"https://github.com/{username}/{repo}"
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_path = pathlib.Path(temp_dir)
         repo_dir = download_repo(repo_url, temp_path, github_token)
         src_dir = find_src_directory(repo_dir)
         repo_name = repo
-        analyze_repository(src_dir, repo_name, target_file)
-        generated_svg = f"import_graph_{repo_name.replace('/', '_')}.svg"
-        generated_dot = f"import_graph_{repo_name.replace('/', '_')}.dot"
-        if pathlib.Path(generated_svg).exists():
-            pathlib.Path(generated_svg).replace(svg_path)
-        # Clean up the .dot file if it exists
-        if pathlib.Path(generated_dot).exists():
-            pathlib.Path(generated_dot).unlink()
-        return str(svg_path)
+        svg_path = analyze_repository(src_dir, repo_name, target_file)
+        # Copy SVG from /tmp to cache
+        if os.path.exists(svg_path):
+            import shutil
+            shutil.copy(svg_path, cache_svg_path)
+        return str(cache_svg_path)
 
 
 def main():
