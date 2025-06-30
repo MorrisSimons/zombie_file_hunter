@@ -4,6 +4,20 @@ from main import generate_svg_for_github_repo
 
 app = Flask(__name__)
 
+@app.route('/')
+def landing_page():
+    return '''
+    <html>
+    <head><title>Zombie File Hunter</title></head>
+    <body>
+        <h1>Welcome to Zombie File Hunter!</h1>
+        <p>To view a GitHub repo's import graph, use a URL like:</p>
+        <code>https://g.morrissimons.com/&lt;username&gt;/&lt;repo&gt;</code>
+        <p>Example: <a href="/MorrisSimons/sample_test_page">/MorrisSimons/sample_test_page</a></p>
+    </body>
+    </html>
+    '''
+
 @app.route('/<username>/<repo>')
 def repo_svg(username, repo):
     try:
