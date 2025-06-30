@@ -1,6 +1,1 @@
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return "Hello from Flask on Vercel!" 
+from app import app  # Expose the Flask app for Vercel serverless deployment 
