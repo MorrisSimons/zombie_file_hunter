@@ -323,8 +323,12 @@ def generate_svg_for_github_repo(username, repo, target_file=None, github_token=
         repo_name = repo
         analyze_repository(src_dir, repo_name, target_file)
         generated_svg = f"import_graph_{repo_name.replace('/', '_')}.svg"
+        generated_dot = f"import_graph_{repo_name.replace('/', '_')}.dot"
         if pathlib.Path(generated_svg).exists():
             pathlib.Path(generated_svg).replace(svg_path)
+        # Clean up the .dot file if it exists
+        if pathlib.Path(generated_dot).exists():
+            pathlib.Path(generated_dot).unlink()
         return str(svg_path)
 
 
