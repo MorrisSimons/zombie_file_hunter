@@ -10,6 +10,7 @@ import time
 
 import networkx as nx
 import requests
+from zip_file_helper_function import _download_zip_repo
 
 # Configuration
 ALIASES = {"@/": "src/"}
@@ -43,7 +44,8 @@ def download_repo(repo_url, temp_dir, github_token=None):
         if result.returncode == 0 and clone_dir.exists():
             return clone_dir
     except Exception as e:
-        raise RuntimeError(f"Downloading repo error! {e}")
+        return _download_zip_repo(repo_url, temp_dir, owner, repo, session, github_token)
+
 
 
 def find_src_directory(repo_dir):
