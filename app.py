@@ -23,8 +23,8 @@ def landing_page():
 def repo_svg(username, repo):
     try:
         github_token = os.environ.get('GITHUB_TOKEN')
-        svg_path = generate_svg_for_github_repo(username, repo, github_token=github_token)
-        return send_file(svg_path, mimetype='image/svg+xml')
+        svg_url = generate_svg_for_github_repo(username, repo, github_token=github_token)
+        return f'<html><body><h2>SVG Import Graph</h2><a href="{svg_url}">View SVG (new tab)</a><br><img src="{svg_url}" style="max-width:100%; border:1px solid #ccc; margin-top:10px;"></body></html>'
     except Exception as e:
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
