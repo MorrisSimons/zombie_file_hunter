@@ -24,59 +24,10 @@ def landing_page():
 def repo_svg(username, repo):
     try:
         github_token = os.environ.get('GITHUB_TOKEN')
-        svg_url = generate_svg_for_github_repo(username, repo, github_token=github_token)
-
-        def is_url(path):
-            return path.startswith('http://') or path.startswith('https://')
-
-        def is_safe_local_path(path):
-            return os.path.abspath(path).startswith('/tmp/blob/')
-
-        if is_url(svg_url):
-            try:
-                svg_response = requests.get(svg_url, timeout=10)
-                svg_response.raise_for_status()
-                return Response(svg_response.content, mimetype='image/svg+xml')
-            except Exception as e:
-                print(f"Error fetching remote SVG: {e}")
-                traceback.print_exc()
-                return Response("SVG not found in remote cache.", mimetype='text/plain', status=404)
-        elif is_safe_local_path(svg_url):
-            if os.path.exists(svg_url):
-                try:
-                    if os.path.getsize(svg_url) == 0:
-                        print("SVG file is empty.")
-                        return Response("SVG file is empty.", mimetype='text/plain', status=500)
-                    with open(svg_url, 'r', encoding='utf-8') as f:
-                        svg_content = f.read()
-                    if not svg_content.strip().startswith('<svg'):
-                        print("Corrupted SVG file.")
-                        return Response("Corrupted SVG file.", mimetype='text/plain', status=500)
-                    return Response(svg_content, mimetype='image/svg+xml')
-                except PermissionError:
-                    print("Permission denied reading SVG file.")
-                    traceback.print_exc()
-                    return Response("Permission denied reading SVG file.", mimetype='text/plain', status=500)
-                except Exception as e:
-                    print(f"Error reading local SVG: {e}")
-                    traceback.print_exc()
-                    return Response("Error reading local SVG file.", mimetype='text/plain', status=500)
-            else:
-                # Try remote cache as fallback
-                username_repo = os.path.basename(svg_url).replace('svg_', '').replace('.svg', '')
-                blob_filename = f"svg/{username_repo}.svg"
-                blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
-                try:
-                    svg_response = requests.get(blob_url, timeout=10)
-                    if svg_response.status_code == 200:
-                        return Response(svg_response.content, mimetype='image/svg+xml')
-                except Exception as e:
-                    print(f"Error fetching fallback remote SVG: {e}")
-                    traceback.print_exc()
-                return Response("SVG not found in local or remote cache.", mimetype='text/plain', status=404)
-        else:
-            print("Invalid SVG path.")
-            return Response("Invalid SVG path.", mimetype='text/plain', status=400)
+        svg_content = generate_svg_for_github_repo(username, repo, github_token=github_token)
+        if not svg_content.strip().startswith('<svg'):
+            return Response("Corrupted SVG generated.", mimetype='text/plain', status=500)
+        return Response(svg_content, mimetype='image/svg+xml')
     except Exception as e:
         print(f"Unhandled error in repo_svg: {e}")
         traceback.print_exc()
