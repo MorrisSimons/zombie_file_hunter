@@ -226,7 +226,7 @@ def resolve_import(import_path, source_file, root_dir):
     return None
 
 
-def analyze_repository(root_dir, repo_name, my_companies_file=None):
+def analyze_repository(root_dir, repo_name, blob_filename, my_companies_file=None):
     """Main analysis function"""
     print(f"Analyzing {repo_name} in {root_dir}")
     
@@ -316,10 +316,9 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
             print(f"  - {file}")
     
     # Generate visualization
-    output_file = f"import_graph_{repo_name.replace('/', '_')}"
     tmp_dir = '/tmp'
-    dot_path = os.path.join(tmp_dir, f"{output_file}.dot")
-    svg_path = os.path.join(tmp_dir, f"{output_file}.svg")
+    dot_path = os.path.join(tmp_dir, f"{blob_filename.replace('/', '_')}.dot")
+    svg_path = os.path.join(tmp_dir, f"{blob_filename.replace('/', '_')}.svg")
 
     # Color nodes
     for node in graph.nodes():
@@ -343,8 +342,8 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     with open(dot_path, 'r', encoding='utf-8') as f:
         dot_code = f.read()
     svg = dot_to_svg(dot_code)
-    print(f"Uploading SVG to Vercel Blob: {output_file}")
-    svg_url = upload_svg_to_vercel_blob(output_file, svg)
+    print(f"Uploading SVG to Vercel Blob: {blob_filename}")
+    svg_url = upload_svg_to_vercel_blob(blob_filename, svg)
     print(f"Uploaded SVG to {svg_url}")
     return svg_url
 
@@ -404,7 +403,7 @@ def generate_svg_for_github_repo(username, repo, target_file=None, github_token=
         repo_dir = download_repo(repo_url, temp_path, github_token)
         src_dir = find_src_directory(repo_dir)
         repo_name = repo
-        svg_url = analyze_repository(src_dir, repo_name, target_file)
+        svg_url = analyze_repository(src_dir, repo_name, blob_filename, target_file)
         return svg_url  # This is the Vercel Blob URL after upload
 
 
