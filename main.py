@@ -21,7 +21,7 @@ SKIP_FILES = [
 ]
 SKIP_PATTERNS = ["node_modules", ".git", "dist", "build", ".next", "__pycache__", ".vscode", ".idea"]
 EXTERNAL_PACKAGES = ['react', 'typescript', 'next', 'axios', 'lodash', '@radix-ui']
-VERCEL_BLOB_TOKEN = os.environ.get('BLOB_READ_WRITE_TOKEN', 'vercel_blob_rw_atXChpVgdZhpywBo_JvnSb0iXaWmasFc3CQqGWEKCxRzZD3')
+VERCEL_BLOB_TOKEN = os.environ.get('BLOB_READ_WRITE_TOKEN')
 
 
 def download_repo(repo_url, temp_dir, github_token=None):
@@ -371,27 +371,24 @@ def upload_svg_to_vercel_blob(filename, svg_content, access_token=VERCEL_BLOB_TO
 
 
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
-    """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses file cache."""
-    cache_dir = pathlib.Path('cache')
-    cache_dir.mkdir(exist_ok=True)
-    cache_svg_path = cache_dir / f"{username}_{repo}.svg"
-    cache_lifetime = 3600  # 1 hour
-    if cache_svg_path.exists():
-        mtime = cache_svg_path.stat().st_mtime
-        if time.time() - mtime < cache_lifetime:
-            return str(cache_svg_path)
+    """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses Vercel Blob for caching."""
+    blob_filename = f"svg/{username}_{repo}.svg"
+    blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
+
+    # Check if SVG already exists on Vercel Blob
+    response = requests.head(blob_url)
+    if response.status_code == 200:
+        return blob_url  # SVG is already cached
+
+    # If not cached, generate it
     repo_url = f"https://github.com/{username}/{repo}"
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_path = pathlib.Path(temp_dir)
         repo_dir = download_repo(repo_url, temp_path, github_token)
         src_dir = find_src_directory(repo_dir)
         repo_name = repo
-        svg_path = analyze_repository(src_dir, repo_name, target_file)
-        # Copy SVG from /tmp to cache
-        if os.path.exists(svg_path):
-            import shutil
-            shutil.copy(svg_path, cache_svg_path)
-        return str(cache_svg_path)
+        svg_url = analyze_repository(src_dir, repo_name, target_file)
+        return svg_url  # This is the Vercel Blob URL after upload
 
 
 def main():
