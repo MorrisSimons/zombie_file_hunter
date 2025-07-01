@@ -1,6 +1,7 @@
 from flask import Flask, Response, send_file
 import os
 from main import generate_svg_for_github_repo
+import requests
 
 app = Flask(__name__)
 
@@ -28,6 +29,13 @@ def repo_svg(username, repo):
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
 # Note: SVG caching is handled in main.py (generate_svg_for_github_repo). This route always serves the cached SVG if available.
+
+def dot_to_svg(dot_code):
+    url = 'https://kroki.io/graphviz/svg'
+    headers = {'Content-Type': 'text/plain'}
+    response = requests.post(url, headers=headers, data=dot_code.encode('utf-8'))
+    response.raise_for_status()
+    return response.text  # This is the SVG as a string
 
 if __name__ == '__main__':
     app.run(debug=True) 
