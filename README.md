@@ -15,12 +15,10 @@
 When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages with multiple subcomponents, I discovered that some of the related files remained unused in the repository. I wanted to clean up the codebase and remove these unused files.
 
 ## How this works
-This MCP allows you to interact with knowledge graphs available in your CodeGPT account or with public graphs from DeepGraph.
+To create a graph from any GitHub repository, simply change the URL from github.com to g.morrissimons.com For example:
 
-To create a graph from any GitHub repository, simply change the URL from github.com to deepgraph.co. For example:
-
-GitHub repo: https://github.com/username/repo
-DeepGraph URL: https://deepgraph.co/username/repo
+- GitHub repo: https://github.com/username/repo 
+- Graph URL: https://g.morrissimons.com/username/repo
 
 
 #### This is the page we will use for our sample:
@@ -145,7 +143,4 @@ This will mark all files that are dependencies of `myCompanies.tsx` in light gre
 - [ ] Minor grammar fixes and file renaming
 - [ ] Test different scenarios where unused files are created and why.
 - [ ] Improve detection of files imported in headers but not used in the project
-- [ ] Add delete function for unused files
-- [ ] Build it as an API
-- [ ] Build it in Go
-- [ ] Build it as a Docker container 
+
