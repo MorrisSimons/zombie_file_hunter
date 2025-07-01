@@ -319,13 +319,32 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     tmp_dir = '/tmp'
     dot_path = os.path.join(tmp_dir, f"{output_file}.dot")
     svg_path = os.path.join(tmp_dir, f"{output_file}.svg")
+
+    # Color nodes
+    for node in graph.nodes():
+        node_path = root_dir / node
+        is_code_file = node_path.suffix.lower() in {'.ts', '.tsx', '.js', '.jsx'}
+        if not is_code_file:
+            graph.nodes[node]['color'] = 'yellow'
+        elif my_companies_file and node in my_companies_connected:
+            graph.nodes[node]['color'] = 'lightgreen'
+        elif node in connected:
+            graph.nodes[node]['color'] = 'lightblue'
+        elif 'components/ui' in node.lower():
+            graph.nodes[node]['color'] = 'orange'
+        else:
+            graph.nodes[node]['color'] = 'red'
+        graph.nodes[node]['style'] = 'filled'
+
     nx.drawing.nx_pydot.write_dot(graph, dot_path)
     # Generate SVG
     try:
         subprocess.run(["dot", "-Tsvg", dot_path, "-o", svg_path], check=True)
         print(f"Generated {svg_path}")
-    except:
-        print("Install Graphviz to generate SVG files")
+    except Exception as e:
+        raise RuntimeError(f"SVG generation failed: {e}. Make sure Graphviz is installed.")
+    if not os.path.exists(svg_path):
+        raise RuntimeError(f"SVG file was not created at {svg_path}. The repository may be empty, not a JS/TS project, or Graphviz may not be installed.")
     return svg_path
 
 
