@@ -371,17 +371,33 @@ def upload_svg_to_vercel_blob(filename, svg_content, access_token=VERCEL_BLOB_TO
     return response.json()["url"]  # This is the public URL to the SVG
 
 
+def get_blob_image_path(identifier):
+    blob_dir = "blob/"
+    if not os.path.exists(blob_dir):
+        return None
+    for filename in os.listdir(blob_dir):
+        if identifier in filename:
+            return os.path.join(blob_dir, filename)
+    return None
+
+
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
     """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses Vercel Blob for caching."""
     blob_filename = f"svg/{username}_{repo}.svg"
     blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
 
-    # Check if SVG already exists on Vercel Blob
+    # 1. Check local blob directory first
+    local_blob_path = get_blob_image_path(f"{username}_{repo}")
+    if local_blob_path:
+        print(f"Using existing local image: {local_blob_path}")
+        return local_blob_path
+
+    # 2. Check remote Vercel Blob
     response = requests.head(blob_url)
     if response.status_code == 200:
         return blob_url  # SVG is already cached
 
-    # If not cached, generate it
+    # 3. If not cached, generate it
     repo_url = f"https://github.com/{username}/{repo}"
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_path = pathlib.Path(temp_dir)
