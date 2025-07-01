@@ -31,9 +31,22 @@ def repo_svg(username, repo):
             return Response(svg_response.content, mimetype='image/svg+xml')
         else:
             # Local file path
-            with open(svg_url, 'r', encoding='utf-8') as f:
-                svg_content = f.read()
-            return Response(svg_content, mimetype='image/svg+xml')
+            if os.path.exists(svg_url):
+                with open(svg_url, 'r', encoding='utf-8') as f:
+                    svg_content = f.read()
+                return Response(svg_content, mimetype='image/svg+xml')
+            else:
+                # Try remote cache as fallback
+                username_repo = os.path.basename(svg_url).replace('svg_', '').replace('.svg', '')
+                blob_filename = f"svg/{username_repo}.svg"
+                blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
+                try:
+                    svg_response = requests.get(blob_url)
+                    if svg_response.status_code == 200:
+                        return Response(svg_response.content, mimetype='image/svg+xml')
+                except Exception:
+                    pass
+                return Response("SVG not found in local or remote cache.", mimetype='text/plain', status=404)
     except Exception as e:
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
