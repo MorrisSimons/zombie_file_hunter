@@ -342,6 +342,12 @@ def analyze_repository(root_dir, repo_name, blob_filename, my_companies_file=Non
     with open(dot_path, 'r', encoding='utf-8') as f:
         dot_code = f.read()
     svg = dot_to_svg(dot_code)
+    # Save SVG locally for caching
+    local_blob_dir = "blob"
+    os.makedirs(local_blob_dir, exist_ok=True)
+    local_svg_path = os.path.join(local_blob_dir, blob_filename.replace('/', '_'))
+    with open(local_svg_path, "w", encoding="utf-8") as f:
+        f.write(svg)
     print(f"Uploading SVG to Vercel Blob: {blob_filename}")
     svg_url = upload_svg_to_vercel_blob(blob_filename, svg)
     print(f"Uploaded SVG to {svg_url}")
