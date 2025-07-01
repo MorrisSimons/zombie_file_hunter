@@ -24,7 +24,10 @@ def repo_svg(username, repo):
     try:
         github_token = os.environ.get('GITHUB_TOKEN')
         svg_url = generate_svg_for_github_repo(username, repo, github_token=github_token)
-        return f'<html><body><h2>SVG Import Graph</h2><a href="{svg_url}">View SVG (new tab)</a><br><img src="{svg_url}" style="max-width:100%; border:1px solid #ccc; margin-top:10px;"></body></html>'
+        # Fetch the SVG content from the URL
+        svg_response = requests.get(svg_url)
+        svg_response.raise_for_status()
+        return Response(svg_response.content, mimetype='image/svg+xml')
     except Exception as e:
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
