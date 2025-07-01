@@ -138,7 +138,6 @@ This will mark all files that are dependencies of `myCompanies.tsx` in light gre
 - [x] Add yellow color for non-code files (assets, PDFs, etc.)
 - [x] Add target file highlighting with green color.
 - [x] Fix arguments input repo error handling.
-- [ ] Fix Blob cache work, right now it caches the image and generates a new one.
 - [ ] Build a dashboard to see how many unused lovable files exist.
 - [ ] Minor grammar fixes and file renaming
 - [ ] Test different scenarios where unused files are created and why.
