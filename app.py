@@ -2,6 +2,7 @@ from flask import Flask, Response, send_file
 import os
 from main import generate_svg_for_github_repo
 import requests
+import traceback
 
 app = Flask(__name__)
 
@@ -24,30 +25,61 @@ def repo_svg(username, repo):
     try:
         github_token = os.environ.get('GITHUB_TOKEN')
         svg_url = generate_svg_for_github_repo(username, repo, github_token=github_token)
-        if svg_url.startswith('http://') or svg_url.startswith('https://'):
-            # Fetch the SVG content from the URL
-            svg_response = requests.get(svg_url)
-            svg_response.raise_for_status()
-            return Response(svg_response.content, mimetype='image/svg+xml')
-        else:
-            # Local file path
+
+        def is_url(path):
+            return path.startswith('http://') or path.startswith('https://')
+
+        def is_safe_local_path(path):
+            return os.path.abspath(path).startswith('/tmp/blob/')
+
+        if is_url(svg_url):
+            try:
+                svg_response = requests.get(svg_url, timeout=10)
+                svg_response.raise_for_status()
+                return Response(svg_response.content, mimetype='image/svg+xml')
+            except Exception as e:
+                print(f"Error fetching remote SVG: {e}")
+                traceback.print_exc()
+                return Response("SVG not found in remote cache.", mimetype='text/plain', status=404)
+        elif is_safe_local_path(svg_url):
             if os.path.exists(svg_url):
-                with open(svg_url, 'r', encoding='utf-8') as f:
-                    svg_content = f.read()
-                return Response(svg_content, mimetype='image/svg+xml')
+                try:
+                    if os.path.getsize(svg_url) == 0:
+                        print("SVG file is empty.")
+                        return Response("SVG file is empty.", mimetype='text/plain', status=500)
+                    with open(svg_url, 'r', encoding='utf-8') as f:
+                        svg_content = f.read()
+                    if not svg_content.strip().startswith('<svg'):
+                        print("Corrupted SVG file.")
+                        return Response("Corrupted SVG file.", mimetype='text/plain', status=500)
+                    return Response(svg_content, mimetype='image/svg+xml')
+                except PermissionError:
+                    print("Permission denied reading SVG file.")
+                    traceback.print_exc()
+                    return Response("Permission denied reading SVG file.", mimetype='text/plain', status=500)
+                except Exception as e:
+                    print(f"Error reading local SVG: {e}")
+                    traceback.print_exc()
+                    return Response("Error reading local SVG file.", mimetype='text/plain', status=500)
             else:
                 # Try remote cache as fallback
                 username_repo = os.path.basename(svg_url).replace('svg_', '').replace('.svg', '')
                 blob_filename = f"svg/{username_repo}.svg"
                 blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
                 try:
-                    svg_response = requests.get(blob_url)
+                    svg_response = requests.get(blob_url, timeout=10)
                     if svg_response.status_code == 200:
                         return Response(svg_response.content, mimetype='image/svg+xml')
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"Error fetching fallback remote SVG: {e}")
+                    traceback.print_exc()
                 return Response("SVG not found in local or remote cache.", mimetype='text/plain', status=404)
+        else:
+            print("Invalid SVG path.")
+            return Response("Invalid SVG path.", mimetype='text/plain', status=400)
     except Exception as e:
+        print(f"Unhandled error in repo_svg: {e}")
+        traceback.print_exc()
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
 # Note: SVG caching is handled in main.py (generate_svg_for_github_repo). This route always serves the cached SVG if available.
