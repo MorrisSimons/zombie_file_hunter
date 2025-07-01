@@ -21,6 +21,7 @@ SKIP_FILES = [
 ]
 SKIP_PATTERNS = ["node_modules", ".git", "dist", "build", ".next", "__pycache__", ".vscode", ".idea"]
 EXTERNAL_PACKAGES = ['react', 'typescript', 'next', 'axios', 'lodash', '@radix-ui']
+VERCEL_BLOB_TOKEN = os.environ.get('BLOB_READ_WRITE_TOKEN', 'vercel_blob_rw_atXChpVgdZhpywBo_JvnSb0iXaWmasFc3CQqGWEKCxRzZD3')
 
 
 def download_repo(repo_url, temp_dir, github_token=None):
@@ -342,10 +343,11 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     with open(dot_path, 'r', encoding='utf-8') as f:
         dot_code = f.read()
     svg = dot_to_svg(dot_code)
-    with open(svg_path, 'w', encoding='utf-8') as f:
-        f.write(svg)
-    print(f"Generated {svg_path}")
-    return svg_path
+    # Upload SVG to Vercel Blob
+    blob_filename = f"svg/{repo_name.replace('/', '_')}.svg"
+    svg_url = upload_svg_to_vercel_blob(blob_filename, svg)
+    print(f"Uploaded SVG to {svg_url}")
+    return svg_url
 
 
 def dot_to_svg(dot_code):
@@ -354,6 +356,18 @@ def dot_to_svg(dot_code):
     response = requests.post(url, headers=headers, data=dot_code.encode('utf-8'))
     response.raise_for_status()
     return response.text  # This is the SVG as a string
+
+
+def upload_svg_to_vercel_blob(filename, svg_content, access_token=VERCEL_BLOB_TOKEN, access='public'):
+    url = f"https://blob.vercel-storage.com/api/blob/{filename}"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "x-vercel-access": access,
+        "Content-Type": "image/svg+xml"
+    }
+    response = requests.put(url, headers=headers, data=svg_content.encode('utf-8'))
+    response.raise_for_status()
+    return response.json()["url"]  # This is the public URL to the SVG
 
 
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
