@@ -14,6 +14,15 @@
 
 When I used Loveable, I found it generated code and functions that I sometimes didn't want. When I deleted larger components or pages with multiple subcomponents, I discovered that some of the related files remained unused in the repository. I wanted to clean up the codebase and remove these unused files.
 
+## How this works
+This MCP allows you to interact with knowledge graphs available in your CodeGPT account or with public graphs from DeepGraph.
+
+To create a graph from any GitHub repository, simply change the URL from github.com to deepgraph.co. For example:
+
+GitHub repo: https://github.com/username/repo
+DeepGraph URL: https://deepgraph.co/username/repo
+
+
 #### This is the page we will use for our sample:
 
 ![image of the sample test page](assets/image-2.png)
@@ -101,19 +110,6 @@ Connected components: 73
 Unused components: 37
 ```
 
-## How It Works
-
-1. **Repository Download:** Clones the repository (preferred) or downloads a ZIP as a fallback.
-2. **Source Discovery:** Identifies the main source directory (`src/` or root).
-3. **File Scanning:** Searches for all relevant files including:
-   - Code files: JavaScript/TypeScript files (`.js`, `.jsx`, `.ts`, `.tsx`)
-   - Asset files: Images, documents, and other resources (`.png`, `.jpg`, `.pdf`, `.webp`, `.css`, `.md`, etc.)
-4. **Import Analysis:** Extracts import statements and resolves file paths for code files.
-5. **Graph Building:** Builds a directed graph representing file dependencies.
-6. **Unused Detection:** Finds files not reachable from the main entry points.
-7. **Target Analysis:** Optionally highlights files connected to a specific target file.
-8. **Visualization:** Produces visual graphs in DOT and SVG formats.
-
 ## Output
 
 The tool provides:
@@ -140,10 +136,12 @@ python main.py "https://github.com/owner/repo" Pages/MyCompanies.tsx
 This will mark all files that are dependencies of `myCompanies.tsx` in light green, making it easy to see which files are specifically related to that component.
 
 ## TODO:
-- [x] Fix the README to explain the new updates
+- [x] Fix the README to explain the new updates.
 - [x] Add yellow color for non-code files (assets, PDFs, etc.)
-- [x] Add target file highlighting with green color
-- [x] Fix arguments input repo error handling
+- [x] Add target file highlighting with green color.
+- [x] Fix arguments input repo error handling.
+- [ ] Fix Blob cache work, right now it caches the image and generates a new one.
+- [ ] Build a dashboard to see how many unused lovable files exist.
 - [ ] Minor grammar fixes and file renaming
 - [ ] Test different scenarios where unused files are created and why.
 - [ ] Improve detection of files imported in headers but not used in the project
