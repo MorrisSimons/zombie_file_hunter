@@ -342,7 +342,16 @@ def analyze_repository(root_dir, repo_name, blob_filename, my_companies_file=Non
     with open(dot_path, 'r', encoding='utf-8') as f:
         dot_code = f.read()
     svg = dot_to_svg(dot_code)
-    return svg  # Return SVG string directly
+    # Save SVG locally for caching
+    local_blob_dir = "/tmp/blob"
+    os.makedirs(local_blob_dir, exist_ok=True)
+    local_svg_path = os.path.join(local_blob_dir, blob_filename.replace('/', '_'))
+    with open(local_svg_path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"Uploading SVG to Vercel Blob: {blob_filename}")
+    svg_url = upload_svg_to_vercel_blob(blob_filename, svg)
+    print(f"Uploaded SVG to {svg_url}")
+    return svg_url
 
 
 def dot_to_svg(dot_code):
@@ -353,16 +362,55 @@ def dot_to_svg(dot_code):
     return response.text  # This is the SVG as a string
 
 
+def upload_svg_to_vercel_blob(filename, svg_content, access_token=VERCEL_BLOB_TOKEN, access='public'):
+    url = f"https://blob.vercel-storage.com/api/blob/{filename}"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "x-vercel-access": access,
+        "Content-Type": "image/svg+xml"
+    }
+    print(f"Uploading SVG to {url} with headers: {{'Authorization': 'Bearer ...', 'x-vercel-access': access, 'Content-Type': 'image/svg+xml'}}")
+    response = requests.put(url, headers=headers, data=svg_content.encode('utf-8'))
+    print(f"Upload response status: {response.status_code}, body: {response.text}")
+    response.raise_for_status()
+    return response.json()["url"]  # This is the public URL to the SVG
+
+
+def get_blob_image_path(identifier):
+    blob_dir = "/tmp/blob/"
+    if not os.path.exists(blob_dir):
+        return None
+    for filename in os.listdir(blob_dir):
+        if identifier in filename:
+            return os.path.join(blob_dir, filename)
+    return None
+
+
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
-    """Download, analyze, and generate SVG for a GitHub repo. Returns SVG string directly."""
+    """Download, analyze, and generate SVG for a GitHub repo. Returns SVG file path. Uses Vercel Blob for caching."""
+    blob_filename = f"svg/{username}_{repo}.svg"
+    blob_url = f"https://blob.vercel-storage.com/api/blob/{blob_filename}"
+
+    # 1. Check local blob directory first
+    local_blob_path = get_blob_image_path(f"{username}_{repo}")
+    if local_blob_path:
+        print(f"Using existing local image: {local_blob_path}")
+        return local_blob_path
+
+    # 2. Check remote Vercel Blob
+    response = requests.head(blob_url)
+    if response.status_code == 200:
+        return blob_url  # SVG is already cached
+
+    # 3. If not cached, generate it
     repo_url = f"https://github.com/{username}/{repo}"
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_path = pathlib.Path(temp_dir)
         repo_dir = download_repo(repo_url, temp_path, github_token)
         src_dir = find_src_directory(repo_dir)
         repo_name = repo
-        svg = analyze_repository(src_dir, repo_name, f"svg/{username}_{repo}.svg", target_file)
-        return svg  # Return SVG string directly
+        svg_url = analyze_repository(src_dir, repo_name, blob_filename, target_file)
+        return svg_url  # This is the Vercel Blob URL after upload
 
 
 def main():
@@ -385,8 +433,8 @@ def main():
         else:
             target_file = None
         try:
-            svg = generate_svg_for_github_repo(username, repo, target_file, github_token)
-            print(f"SVG generated: {svg}")
+            svg_path = generate_svg_for_github_repo(username, repo, target_file, github_token)
+            print(f"SVG generated at: {svg_path}")
         except Exception as e:
             print(f"Error: {e}")
     else:

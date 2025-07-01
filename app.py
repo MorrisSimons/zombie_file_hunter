@@ -2,7 +2,6 @@ from flask import Flask, Response, send_file
 import os
 from main import generate_svg_for_github_repo
 import requests
-import traceback
 
 app = Flask(__name__)
 
@@ -24,13 +23,18 @@ def landing_page():
 def repo_svg(username, repo):
     try:
         github_token = os.environ.get('GITHUB_TOKEN')
-        svg_content = generate_svg_for_github_repo(username, repo, github_token=github_token)
-        if not svg_content.strip().startswith('<svg'):
-            return Response("Corrupted SVG generated.", mimetype='text/plain', status=500)
-        return Response(svg_content, mimetype='image/svg+xml')
+        svg_url = generate_svg_for_github_repo(username, repo, github_token=github_token)
+        if svg_url.startswith('http://') or svg_url.startswith('https://'):
+            # Fetch the SVG content from the URL
+            svg_response = requests.get(svg_url)
+            svg_response.raise_for_status()
+            return Response(svg_response.content, mimetype='image/svg+xml')
+        else:
+            # Local file path
+            with open(svg_url, 'r', encoding='utf-8') as f:
+                svg_content = f.read()
+            return Response(svg_content, mimetype='image/svg+xml')
     except Exception as e:
-        print(f"Unhandled error in repo_svg: {e}")
-        traceback.print_exc()
         return Response(f"Error generating SVG: {e}", mimetype='text/plain', status=500)
 
 # Note: SVG caching is handled in main.py (generate_svg_for_github_repo). This route always serves the cached SVG if available.
