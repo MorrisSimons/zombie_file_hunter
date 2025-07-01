@@ -343,9 +343,8 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
     with open(dot_path, 'r', encoding='utf-8') as f:
         dot_code = f.read()
     svg = dot_to_svg(dot_code)
-    # Upload SVG to Vercel Blob
-    blob_filename = f"svg/{repo_name.replace('/', '_')}.svg"
-    svg_url = upload_svg_to_vercel_blob(blob_filename, svg)
+    print(f"Uploading SVG to Vercel Blob: {output_file}")
+    svg_url = upload_svg_to_vercel_blob(output_file, svg)
     print(f"Uploaded SVG to {svg_url}")
     return svg_url
 
@@ -365,7 +364,9 @@ def upload_svg_to_vercel_blob(filename, svg_content, access_token=VERCEL_BLOB_TO
         "x-vercel-access": access,
         "Content-Type": "image/svg+xml"
     }
+    print(f"Uploading SVG to {url} with headers: {{'Authorization': 'Bearer ...', 'x-vercel-access': access, 'Content-Type': 'image/svg+xml'}}")
     response = requests.put(url, headers=headers, data=svg_content.encode('utf-8'))
+    print(f"Upload response status: {response.status_code}, body: {response.text}")
     response.raise_for_status()
     return response.json()["url"]  # This is the public URL to the SVG
 
