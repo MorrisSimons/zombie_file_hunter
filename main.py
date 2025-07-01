@@ -336,16 +336,24 @@ def analyze_repository(root_dir, repo_name, my_companies_file=None):
             graph.nodes[node]['color'] = 'red'
         graph.nodes[node]['style'] = 'filled'
 
+    # Write DOT file
     nx.drawing.nx_pydot.write_dot(graph, dot_path)
-    # Generate SVG
-    try:
-        subprocess.run(["dot", "-Tsvg", dot_path, "-o", svg_path], check=True)
-        print(f"Generated {svg_path}")
-    except Exception as e:
-        raise RuntimeError(f"SVG generation failed: {e}. Make sure Graphviz is installed.")
-    if not os.path.exists(svg_path):
-        raise RuntimeError(f"SVG file was not created at {svg_path}. The repository may be empty, not a JS/TS project, or Graphviz may not be installed.")
+    # Use Kroki to generate SVG
+    with open(dot_path, 'r', encoding='utf-8') as f:
+        dot_code = f.read()
+    svg = dot_to_svg(dot_code)
+    with open(svg_path, 'w', encoding='utf-8') as f:
+        f.write(svg)
+    print(f"Generated {svg_path}")
     return svg_path
+
+
+def dot_to_svg(dot_code):
+    url = 'https://kroki.io/graphviz/svg'
+    headers = {'Content-Type': 'text/plain'}
+    response = requests.post(url, headers=headers, data=dot_code.encode('utf-8'))
+    response.raise_for_status()
+    return response.text  # This is the SVG as a string
 
 
 def generate_svg_for_github_repo(username, repo, target_file=None, github_token=None):
