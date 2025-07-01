@@ -10,7 +10,7 @@ import time
 
 import networkx as nx
 import requests
-from zip_file_helper_function import _download_zip_repo
+
 
 # Configuration
 ALIASES = {"@/": "src/"}
@@ -24,7 +24,7 @@ EXTERNAL_PACKAGES = ['react', 'typescript', 'next', 'axios', 'lodash', '@radix-u
 
 
 def download_repo(repo_url, temp_dir, github_token=None):
-    """Download GitHub repo using ZIP archive via GitHub API (no git required)"""
+    """Download GitHub repo using ZIP archive via GitHub API (no git required). Tries API, then public URLs for main/master."""
     import zipfile
     import io
     import os
@@ -34,24 +34,58 @@ def download_repo(repo_url, temp_dir, github_token=None):
     path_parts = parsed.path.strip('/').split('/')
     owner, repo = path_parts[0], path_parts[1]
 
-    # Download ZIP from GitHub API
+    attempts = []
+    # 1. Try GitHub API (works for private repos with token)
     zip_url = f"https://api.github.com/repos/{owner}/{repo}/zipball"
     headers = {}
     if github_token:
         headers['Authorization'] = f'token {github_token}'
+    print(f"Trying GitHub API ZIP URL: {zip_url}")
     response = requests.get(zip_url, headers=headers, stream=True)
-    if response.status_code != 200:
-        raise RuntimeError(f"Failed to download repo ZIP: {response.status_code} {response.text}")
-
-    # Extract ZIP to temp_dir
-    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-        zip_ref.extractall(temp_dir)
-        # The extracted folder name is not always predictable, so find it
-        extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
-        if not extracted_dirs:
-            raise RuntimeError("No directory found after extracting repo ZIP")
-        # Return the first directory (should be the repo root)
-        return extracted_dirs[0]
+    attempts.append((zip_url, response.status_code))
+    if response.status_code == 200:
+        try:
+            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                zip_ref.extractall(temp_dir)
+                extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
+                if not extracted_dirs:
+                    raise RuntimeError("No directory found after extracting repo ZIP (API)")
+                return extracted_dirs[0]
+        except Exception as e:
+            print(f"Error extracting ZIP from API: {e}")
+    # 2. Try public ZIP for 'main' branch
+    zip_url_main = f"https://github.com/{owner}/{repo}/archive/refs/heads/main.zip"
+    print(f"Trying public ZIP URL (main): {zip_url_main}")
+    response = requests.get(zip_url_main, stream=True)
+    attempts.append((zip_url_main, response.status_code))
+    if response.status_code == 200:
+        try:
+            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                zip_ref.extractall(temp_dir)
+                extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
+                if not extracted_dirs:
+                    raise RuntimeError("No directory found after extracting repo ZIP (main branch)")
+                return extracted_dirs[0]
+        except Exception as e:
+            print(f"Error extracting ZIP from public main: {e}")
+    # 3. Try public ZIP for 'master' branch
+    zip_url_master = f"https://github.com/{owner}/{repo}/archive/refs/heads/master.zip"
+    print(f"Trying public ZIP URL (master): {zip_url_master}")
+    response = requests.get(zip_url_master, stream=True)
+    attempts.append((zip_url_master, response.status_code))
+    if response.status_code == 200:
+        try:
+            with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
+                zip_ref.extractall(temp_dir)
+                extracted_dirs = [d for d in temp_dir.iterdir() if d.is_dir()]
+                if not extracted_dirs:
+                    raise RuntimeError("No directory found after extracting repo ZIP (master branch)")
+                return extracted_dirs[0]
+        except Exception as e:
+            print(f"Error extracting ZIP from public master: {e}")
+    # If all attempts fail, raise a clear error
+    msg = "\n".join([f"Tried: {url} (status {status})" for url, status in attempts])
+    raise RuntimeError(f"Failed to download repo ZIP after multiple attempts.\n{msg}\nCheck if the repo exists, is public, or if you need a valid GitHub token.")
 
 
 def find_src_directory(repo_dir):
