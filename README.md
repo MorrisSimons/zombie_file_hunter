@@ -20,7 +20,7 @@ To create a graph from any GitHub repository, simply change the URL from github.
 - GitHub repo: https://github.com/username/repo 
 - Graph URL: https://g.morrissimons.com/username/repo
 
-
+- This is live example: https://g.morrissimons.com/MorrisSimons/sample_test_page
 #### This is the page we will use for our sample:
 
 ![image of the sample test page](assets/image-2.png)
