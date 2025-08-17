@@ -142,4 +142,6 @@ This will mark all files that are dependencies of `myCompanies.tsx` in light gre
 - [ ] Minor grammar fixes and file renaming
 - [ ] Test different scenarios where unused files are created and why.
 - [ ] Improve detection of files imported in headers but not used in the project
+- [ ] Add a GIF on how to use it.
+- [ ] Make a solution for private repos.
 
