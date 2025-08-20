@@ -20,17 +20,19 @@ To create a graph from any GitHub repository, simply change the URL from github.
 - GitHub repo: https://github.com/username/repo 
 - Graph URL: https://g.morrissimons.com/username/repo
 
-- This is a live example: https://g.morrissimons.com/MorrisSimons/sample_test_page
+![DEMO of What i built](Resources/zombie_demo.gif)
+
+
 #### This is the page we will use for our sample:
 
-![image of the sample test page](assets/image-2.png)
+![image of the sample test page](Resources/image-2.png)
 
 **Link to code:** [https://github.com/MorrisSimons/sample\_test\_page](https://github.com/MorrisSimons/sample_test_page)
 
 
 
 #### We only want to look at a small portion of the image; which covers five points to help understand different parts of the project:
-![Dependency graph visualization showing used and unused files](assets/image.png)
+![Dependency graph visualization showing used and unused files](Resources/image.png)
 
 * Unused files are marked in red.
 * Unused files part of the UI folder are marked in orange.
@@ -42,15 +44,6 @@ To create a graph from any GitHub repository, simply change the URL from github.
 **Important notes about the code:**
 * Files in the UI folder are typically generated uniformly for all projects but aren't always utilized. This explains why the sample repository has many unused files.
 * Some files might be connected indirectly (e.g., to `button.tsx`) but remain unused by the `main.tsx` so it's not used in the project. All `.js`, `.jsx`, `.ts`, `.tsx` files not directly connected to the main project are marked red.
-
-The primary purpose of this project is not just cleaning up the UI folder but identifying unused or forgotten files, such as leftover subcomponents like `testapge.tsx`. If you're interested, you can explore a larger example project in the `assets` folder of this repository.
-
-## Example Outputs
-
-This repository includes several example outputs in the `example_folder/`:
-- **Real Estate Mapstore**: [`assets/import_graph_realestate-mapstore.svg`](assets/import_graph_realestate-mapstore.svg) - Analysis of a larger, more complex project
-- **Sample Test Page Analysis**: [`import_graph_sample_test_page.svg`](import_graph_sample_test_page.svg) - Analysis of the sample repository mentioned above
-Each analysis generates both `.dot` (source) and `.svg` (visual) files that show the dependency relationships between files in your project.
 
 ### Aim of this Project:
 
